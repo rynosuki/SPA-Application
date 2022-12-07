@@ -1,27 +1,27 @@
 export default class Tile {
   #value
-  constructor(value) {
-    this.tiles = ["ball", "cherry", "coin", "flower", "gem", "heart", "star", "thunder"]
-    this.empty = "none"
+  constructor (value) {
+    this.tiles = ['ball', 'cherry', 'coin', 'flower', 'gem', 'heart', 'star', 'thunder']
+    this.empty = 'none'
     this.#value = value
     this.complete = false
   }
 
-  turnCard() {
+  turnCard () {
     if (!this.complete) {
       return this.tiles[this.#value]
     }
   }
 
-  turnBack() {
+  turnBack () {
     return this.empty
   }
 
-  getValue() {
+  getValue () {
     return this.tiles[this.#value]
   }
-  
-  setComplete() {
+
+  setComplete () {
     this.complete = true
   }
 }
