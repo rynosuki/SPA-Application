@@ -1,30 +1,64 @@
 import Memory from './memory.js'
 
-const body = document.querySelector('body')
+// const header = document.querySelector('.header')
+const body = document.querySelector('.body')
+const footer = document.querySelector('.footer')
 let moving = false
 const clickX = 0
 const clickY = 0
-const focused = new Memory()
+const activeApps = []
 
-addEventListener('pointerdown', function (e) {
-  moving = true
-  if (e.target === body) {
-    focused.renderGame(e)
+renderApps()
+const ws = new WebSocket('wss://courselab.lnu.se/message-app/socket')
+
+ws.onopen = () => {
+  ws.send(JSON.stringify({
+    type: 'message',
+    data: 'The message text is sent using the data property',
+    username: 'Robin',
+    channel: 'my, not so secret, channel',
+    key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
+  }))
+}
+
+ws.onmessage = (event) => {
+  console.log(JSON.parse(event.data))
+}
+
+/**
+ *
+ */
+function renderApps () {
+  const apps = ['memoryapp', 'chatapp', 'battleshipapp']
+  for (const appName of apps) {
+    console.log(appName)
+    const tempDiv = document.createElement('div')
+    const tempElement = document.createElement('button')
+    tempElement.style.display = 'none'
+    tempDiv.append(tempElement)
+
+    tempDiv.name = appName
+    tempDiv.style.width = '50px'
+    tempDiv.style.height = '50px'
+    tempDiv.style.backgroundImage = `url(../img/apps/${appName}.png)`
+    footer.append(tempDiv)
+  }
+}
+
+footer.addEventListener('pointerdown', function (e) {
+  if (e.target.name !== undefined) {
+    if (e.target.name === 'memoryapp') {
+      const game = new Memory()
+      activeApps.push(game)
+      game.renderGame(body)
+    }
+    console.log(e.target.name)
   }
 })
 
 addEventListener('pointerup', function (e) {
   moving = false
 })
-
-// document.addEventListener('contextmenu', e => {
-//   e.preventDefault()
-//   let workDiv = document.createElement('div')
-//   workDiv.className = 'contextMenu'
-//   workDiv.style.left = `${e.clientX}px`
-//   workDiv.style.top = `${e.clientY}px`
-//   body.appendChild(workDiv)
-// })
 
 addEventListener('pointermove', function (e) {
   if (moving && e.target !== body) {
