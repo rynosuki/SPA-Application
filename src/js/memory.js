@@ -4,6 +4,7 @@ import Tile from './tile.js'
 export default class Memory extends Application {
   constructor () {
     super()
+    this.appName = 'Memory'
     this.currentObjectUp = undefined
     this.lastObjectUp = undefined
     this.lastEventTarget = undefined
@@ -30,7 +31,10 @@ export default class Memory extends Application {
     this.body.className = 'app'
     this.body.style.left = `${e.clientWidth / 2}px`
     this.body.style.top = `${(e.clientHeight - 80) / 2}px`
+    this.body.style.paddingBottom = '10px'
     e.appendChild(this.body)
+
+    this.header.innerHTML += this.appName
 
     for (let i = 0; i < this.board.length; i++) {
       const buttonContainer = document.createElement('div')
