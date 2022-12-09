@@ -1,3 +1,5 @@
+import Battleship from './battleship.js'
+import Chat from './chat.js'
 import Memory from './memory.js'
 
 // const header = document.querySelector('.header')
@@ -9,21 +11,6 @@ const clickY = 0
 const activeApps = []
 
 renderApps()
-const ws = new WebSocket('wss://courselab.lnu.se/message-app/socket')
-
-ws.onopen = () => {
-  ws.send(JSON.stringify({
-    type: 'message',
-    data: 'The message text is sent using the data property',
-    username: 'Robin',
-    channel: 'my, not so secret, channel',
-    key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
-  }))
-}
-
-ws.onmessage = (event) => {
-  console.log(JSON.parse(event.data))
-}
 
 /**
  *
@@ -49,6 +36,14 @@ footer.addEventListener('pointerdown', function (e) {
   if (e.target.name !== undefined) {
     if (e.target.name === 'memoryapp') {
       const game = new Memory()
+      activeApps.push(game)
+      game.renderGame(body)
+    } else if (e.target.name === 'chatapp') {
+      const game = new Chat()
+      activeApps.push(game)
+      game.renderChat(body)
+    } else if (e.target.name === 'battleshipapp') {
+      const game = new Battleship()
       activeApps.push(game)
       game.renderGame(body)
     }

@@ -34,29 +34,20 @@ export default class Memory extends Application {
     this.body.style.paddingBottom = '10px'
     e.appendChild(this.body)
 
-    this.header.innerHTML += this.appName
+    this.header.innerHTML += `<h1>${this.appName}</h1>`
 
     for (let i = 0; i < this.board.length; i++) {
       const buttonContainer = document.createElement('div')
-      buttonContainer.style.width = '200px'
-      buttonContainer.style.height = '50px'
-      buttonContainer.className = 'appButtonContainer'
-      buttonContainer.style.paddingLeft = '10px'
-      buttonContainer.style.paddingRight = '10px'
+      buttonContainer.className = 'memoryButtonContainer'
       this.main.append(buttonContainer)
 
       for (let j = 0; j < this.board[i].length; j++) {
         const buttonDiv = document.createElement('div')
-        buttonDiv.style.width = '50px'
-        buttonDiv.style.height = '50px'
-        buttonDiv.style.backgroundImage = 'url(../img/memory/none.png)'
+        buttonDiv.className = 'memoryButtons'
         buttonContainer.append(buttonDiv)
 
         const workButton = document.createElement('button')
         workButton.id = `${i}${j}`
-        workButton.style.width = '50px'
-        workButton.style.height = '50px'
-        workButton.style.display = 'none'
         buttonDiv.append(workButton)
       }
     }
@@ -95,15 +86,9 @@ export default class Memory extends Application {
       }
       if (finishedCards === 16) {
         const winMessage = document.createElement('div')
+        winMessage.className = 'memoryWinMessage'
         winMessage.style.width = `${this.body.clientWidth / 2}px`
         winMessage.style.height = `${this.body.clientHeight / 2}px`
-        winMessage.style.background = 'brown'
-        winMessage.style.position = 'absolute'
-        winMessage.style.top = '65px'
-        winMessage.style.left = '55px'
-        winMessage.style.display = 'flex'
-        winMessage.style.justifyContent = 'center'
-        winMessage.style.alignItems = 'center'
 
         const winText = document.createElement('label')
         winText.innerHTML = `You WON in ${this.moves / 2} moves!`
