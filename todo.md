@@ -11,9 +11,9 @@
 
 5. [X] The icon used to close the window should be represented in the upper bar of the window.
 
-6. [ ] Windows should get focus when clicked/dragged.
+6. [X] Windows should get focus when clicked/dragged.
 
-7. [ ] The window with focus shall be on top of all other windows.
+7. [X] The window with focus shall be on top of all other windows.
 
 ### The following three window applications should at least be included in the desktop application:
 
@@ -36,11 +36,17 @@
 # F3: Memory game window application
 ## Read for a description of the memory application.
 
+1. [X] You should be able to play the game with and without using the mouse.
+
+2. [X] The game should count how many attempts the user have made and present that when the game is finnished.
+
+3. [ ] It should be possible to render different sizes of the gameboard. (4x4, 2x2, 2x4)
+
 ### These are the requirements for the Memory application that should exists as a window application in the PWD.
 
 1. [X] The user should be able to open and play multiple memory games simultaneously.
 
-2. [ ] The user should be able to play the game using only the keyboard (accessability).
+2. [X] The user should be able to play the game using only the keyboard (accessability).
 
 3. [ ] One, by you decided, extended feature for the game.
 

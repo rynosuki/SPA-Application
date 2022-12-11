@@ -127,3 +127,8 @@ body {
   justify-Content: 'center';
   align-Items: 'center';
 }
+
+:focus {
+  background-color: aqua;
+  z-index: 10000000;
+}

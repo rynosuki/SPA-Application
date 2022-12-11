@@ -11,7 +11,8 @@ export default class Application {
     this.appName = ''
 
     this.body = document.createElement('div')
-    this.body.className = 'appBody'
+    this.body.className = 'app'
+    this.body.tabIndex = 0
     this.header = document.createElement('div')
     this.header.className = 'appHeader'
     this.main = document.createElement('div')
@@ -25,17 +26,6 @@ export default class Application {
 
     this.body.appendChild(this.header)
     this.body.appendChild(this.main)
-    // this.body.draggable = true
-
-    // this.body.addEventListener('dragstart', e => {
-    //   this.offsetX = e.layerX
-    //   this.offsetY = e.layerY
-    // })
-
-    // this.body.addEventListener('dragend', e => {
-    //   this.body.style.left = `${e.clientX - this.offsetX}px`
-    //   this.body.style.top = `${e.clientY - this.offsetY}px`
-    // })
 
     this.header.addEventListener('click', e => {
       if (e.target.className === 'appCloseButton') {
@@ -44,6 +34,7 @@ export default class Application {
     })
 
     this.header.addEventListener('mousedown', (e) => {
+      e.target.focus()
       console.log(e)
       this.initialX = e.clientX - this.xOffset
       this.initialY = e.clientY - this.yOffset
