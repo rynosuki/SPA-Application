@@ -2,7 +2,7 @@ import Battleship from './battleship.js'
 import Chat from './chat.js'
 import Memory from './memory.js'
 
-// const header = document.querySelector('.header')
+const header = document.querySelector('.header')
 const body = document.querySelector('.body')
 const footer = document.querySelector('.footer')
 let moving = false
@@ -11,6 +11,7 @@ const clickY = 0
 const activeApps = []
 
 renderApps()
+renderTime()
 
 /**
  *
@@ -61,3 +62,45 @@ addEventListener('pointermove', function (e) {
     e.target.style.top = `${e.clientY - clickY}px`
   }
 })
+
+/**
+ *
+ */
+function renderTime () {
+  const tempText = document.createElement('label')
+  tempText.id = 'clock'
+  tempText.style.position = 'absolute'
+  tempText.style.zIndex = '100'
+  tempText.style.color = 'white'
+  tempText.style.right = '10px'
+  tempText.style.top = '5px'
+  header.appendChild(tempText)
+  displayTime()
+  setInterval(displayTime, 60000)
+}
+
+/**
+ *
+ */
+function displayTime () {
+  // get the current time
+  const currentTime = new Date()
+
+  // extract the hours, minutes, and seconds from the current time
+  let hours = currentTime.getHours()
+  let minutes = currentTime.getMinutes()
+
+  // add a leading zero to the hours, minutes, and seconds if they are less than 10
+  if (hours < 10) {
+    hours = '0' + hours
+  }
+  if (minutes < 10) {
+    minutes = '0' + minutes
+  }
+
+  // create a string that represents the current time
+  const currentTimeString = hours + ':' + minutes
+
+  // display the current time
+  document.getElementById('clock').innerHTML = currentTimeString
+}

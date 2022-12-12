@@ -40,7 +40,7 @@
 
 2. [X] The game should count how many attempts the user have made and present that when the game is finnished.
 
-3. [ ] It should be possible to render different sizes of the gameboard. (4x4, 2x2, 2x4)
+3. [X] It should be possible to render different sizes of the gameboard. (4x4, 2x2, 2x4)
 
 ### These are the requirements for the Memory application that should exists as a window application in the PWD.
 
@@ -65,7 +65,7 @@
 
 5. [ ] The user should be able to see at least the 20 latest messages since the chat applications was opened.
 
-6. [ ] One, by you decided, extended feature.
+6. [X] One, by you decided, extended feature.
 
 # F5: An additional window application
 You should add one additional window application to your PWD. It should be developed by yourself and it can for example be the Quiz application or another application you choose to develop.

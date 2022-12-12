@@ -16,6 +16,7 @@ export default class Application {
     this.header = document.createElement('div')
     this.header.className = 'appHeader'
     this.main = document.createElement('div')
+    this.main.className = 'appMain'
 
     this.closeContainer = document.createElement('div')
     this.closeContainer.className = 'appCloseButton'
@@ -35,7 +36,6 @@ export default class Application {
 
     this.header.addEventListener('mousedown', (e) => {
       e.target.focus()
-      console.log(e)
       this.initialX = e.clientX - this.xOffset
       this.initialY = e.clientY - this.yOffset
 
