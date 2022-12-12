@@ -57,9 +57,9 @@
 
 1. [X] The user should be able to have several chat applications running at the same time.
 
-2. [ ] When the user opens the application for the first time the user should be asked to write his/her username.
+2. [X] When the user opens the application for the first time the user should be asked to write his/her username.
 
-3. [ ] The username should remain the same the next time the user starts a chat application or the PWD is restarted.
+3. [X] The username should remain the same the next time the user starts a chat application or the PWD is restarted.
 
 4. [X] The user should be able to send chat messages using a textarea.
 

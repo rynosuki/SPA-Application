@@ -136,6 +136,10 @@ body {
   z-index: 10000000;
 }
 
+:focus .appHeader {
+  background-color: rgb(160, 160, 160);
+}
+
 #myList {
   background-color: aliceblue;
   border: 1px solid black;
