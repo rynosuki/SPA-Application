@@ -5,9 +5,6 @@ import Memory from './memory.js'
 const header = document.querySelector('.header')
 const body = document.querySelector('.body')
 const footer = document.querySelector('.footer')
-let moving = false
-const clickX = 0
-const clickY = 0
 const activeApps = []
 
 renderApps()
@@ -35,31 +32,20 @@ function renderApps () {
 
 footer.addEventListener('pointerdown', function (e) {
   if (e.target.name !== undefined) {
-    if (e.target.name === 'memoryapp') {
-      const game = new Memory()
-      activeApps.push(game)
-      game.renderGame(body)
-    } else if (e.target.name === 'chatapp') {
-      const game = new Chat()
-      activeApps.push(game)
-      game.renderChat(body)
-    } else if (e.target.name === 'battleshipapp') {
-      const game = new Battleship()
-      activeApps.push(game)
-      game.renderGame(body)
+    let game
+    switch (e.target.name) {
+      case 'memoryapp':
+        game = new Memory()
+        break
+      case 'chatapp':
+        game = new Chat()
+        break
+      case 'battleshipapp':
+        game = new Battleship()
+        break
     }
-    console.log(e.target.name)
-  }
-})
-
-addEventListener('pointerup', function (e) {
-  moving = false
-})
-
-addEventListener('pointermove', function (e) {
-  if (moving && e.target !== body) {
-    e.target.style.left = `${e.clientX - clickX}px`
-    e.target.style.top = `${e.clientY - clickY}px`
+    activeApps.push(game)
+    game.renderWindow(body)
   }
 })
 
@@ -76,7 +62,7 @@ function renderTime () {
   tempText.style.top = '5px'
   header.appendChild(tempText)
   displayTime()
-  setInterval(displayTime, 60000)
+  setInterval(displayTime, 10000)
 }
 
 /**

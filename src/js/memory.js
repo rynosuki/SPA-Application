@@ -32,7 +32,7 @@ export default class Memory extends Application {
     }
   }
 
-  renderGame (e) {
+  renderWindow (e) {
     if (this.windowBody === undefined) {
       this.windowBody = e
     }

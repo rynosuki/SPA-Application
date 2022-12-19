@@ -63,7 +63,7 @@
 
 4. [X] The user should be able to send chat messages using a textarea.
 
-5. [ ] The user should be able to see at least the 20 latest messages since the chat applications was opened.
+5. [X] The user should be able to see at least the 20 latest messages since the chat applications was opened.
 
 6. [X] One, by you decided, extended feature.
 

@@ -1,8 +1,10 @@
+/* General CSS */
 html {
   height: 100%;
   width: 100%;
   background-image: url('../img/background.jpg');
   background-size: cover;
+  user-select: none;
 }
 
 body {
@@ -39,22 +41,21 @@ body {
   background-color: rgba(71, 92, 129, 0.435);
 }
 
+/* Application CSS */
 .app {
   display: flex;
   flex-direction: column;
   position: absolute;
   border: 5px solid black;
-  background-color: rgba(255, 235, 205, 0.46);
+  background-color: rgb(255, 235, 205);
+  min-width: 200px;
 }
 
-.appButtonContainer {
+.appMain {
   display: flex;
-}
-
-.contextMenu {
-  position: absolute;
-  width: 100px;
-  border: 5px solid black;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .appHeader {
@@ -67,16 +68,80 @@ body {
   padding-left: 5px;
 }
 
-.appCloseButton > button {
-  display: none;
+.appButtonContainer {
+  display: flex;
 }
 
 .appCloseButton {
+  color: rgb(164, 164, 164);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
   width: 30px;
   height: 30px;
   background: black;
   position: absolute;
   right: 5px;
+  border-radius: 20%;
+  border: 2px solid black;
+}
+
+.appCloseButton:hover {
+  color: black;
+  background-color: red;
+}
+
+.appCloseButton > button {
+  display: none;
+}
+
+:focus {
+  z-index: 10000000;
+}
+
+:focus .appHeader {
+  background-color: rgb(160, 160, 160);
+}
+
+/* Application Chat CSS */
+.messagesDiv {
+  position: relative;
+  box-sizing: border-box;
+  border: 1px solid black;
+  left: 10px;
+  background-color: white;
+  width: 215px;
+  margin-bottom: 10px;
+  max-height: 200px;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+#chat p {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom: 1px dotted black;
+}
+
+.inputDiv {
+  display: flex;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Application Memory CSS */
+.memoryWinMessage {
+  background: 'brown';
+  position: 'absolute';
+  top: '65px';
+  left: '55px';
+  display: 'flex';
+  justify-Content: 'center';
+  align-Items: 'center';
 }
 
 .memoryButtonContainer {
@@ -98,56 +163,28 @@ body {
   display: none;
 }
 
-.inputDiv {
-  display: flex;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-#chat p {
-  margin-top: 0px;
-  margin-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom: 1px dotted black;
-}
-
-.messagesDiv {
-  position: relative;
-  box-sizing: border-box;
-  border: 1px solid black;
-  left: 10px;
-  background-color: white;
-  width: 190px;
-  margin-bottom: 10px;
-}
-
-.memoryWinMessage {
-  background: 'brown';
-  position: 'absolute';
-  top: '65px';
-  left: '55px';
-  display: 'flex';
-  justify-Content: 'center';
-  align-Items: 'center';
-}
-
-:focus {
-  z-index: 10000000;
-}
-
-:focus .appHeader {
-  background-color: rgb(160, 160, 160);
-}
-
 #myList {
   background-color: aliceblue;
   border: 1px solid black;
 }
 
-.appMain {
+/* Application Battleship CSS */
+.battleshipButtonContainer {
+  width: 200px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.battleshipBoardCell {
+  width: 24px;
+  height: 24px;
+  background-image: url(../img/battleship/none.png);
+  background-size: cover;
+  border: 1px solid black;
+}
+
+.boardRow {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
 }

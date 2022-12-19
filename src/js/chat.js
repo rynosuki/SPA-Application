@@ -42,12 +42,12 @@ export default class Chat extends Application {
     button.addEventListener('click', () => {
       const userName = input.value
       localStorage.setItem('username', userName)
-      this.renderChat(body)
+      this.renderWindow(body)
       inputDiv.remove()
     })
   }
 
-  renderChat (body) {
+  renderWindow (body) {
     while (this.main.firstChild) {
       this.main.removeChild(this.main.lastChild)
     }
@@ -102,9 +102,11 @@ export default class Chat extends Application {
   }
 
   sendMessage (message, username) {
+    // Check if message is longer than 24 characters if so return
     if (message.length > this.maxMessageLength) {
       return
     }
+
     this.ws.send(JSON.stringify({
       type: 'message',
       data: this.cypher(message, this.listeningChannel),
@@ -115,16 +117,24 @@ export default class Chat extends Application {
   }
 
   renderMessage (data) {
-    console.log(data)
-    if (data.channel === 'Robin') {
-      const message = document.createElement('p')
-      message.innerHTML = this.decypher(data.data, this.listeningChannel)
-      this.messages.append(message)
-    } else {
-      const message = document.createElement('p')
-      message.innerHTML = data.data
-      this.messages.append(message)
+    if (data.data === '') {
+      return
     }
+    const message = document.createElement('p')
+
+    // Check if message is in channel Robin if so decypher
+    if (data.channel === 'Robin') {
+      message.innerHTML = this.decypher(data.data, this.listeningChannel)
+    } else {
+      message.innerHTML = data.data
+    }
+
+    // Remove any entry above 20
+    if (this.messages.children.length > 20) {
+      this.messages.removeChild(this.messages.firstChild)
+    }
+    this.messages.append(message)
+    this.messages.scrollTop = this.messages.scrollHeight
   }
 
   cypher (message, listeningChannel) {

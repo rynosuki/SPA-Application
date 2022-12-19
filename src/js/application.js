@@ -21,6 +21,8 @@ export default class Application {
     this.closeContainer = document.createElement('div')
     this.closeContainer.className = 'appCloseButton'
     this.closeButton = document.createElement('button')
+    this.closeButton.className = 'appCloseButton'
+    this.closeContainer.append(document.createTextNode('X'))
     this.closeContainer.append(this.closeButton)
 
     this.header.append(this.closeContainer)
@@ -39,7 +41,7 @@ export default class Application {
       this.initialX = e.clientX - this.xOffset
       this.initialY = e.clientY - this.yOffset
 
-      if (e.target === this.header) {
+      if (this.header.contains(e.target) && e.target.className !== 'appCloseButton') {
         this.isDragging = true
       }
     })
@@ -51,12 +53,11 @@ export default class Application {
       this.isDragging = false
     })
 
-    this.header.addEventListener('mousemove', (e) => {
+    document.querySelector('body').parentElement.addEventListener('mousemove', e => {
       if (this.isDragging) {
         e.preventDefault()
         this.currentX = e.clientX - this.initialX
         this.currentY = e.clientY - this.initialY
-
         this.xOffset = this.currentX
         this.yOffset = this.currentY
 
