@@ -180,7 +180,13 @@ body {
   height: 24px;
   background-image: url(../img/battleship/none.png);
   background-size: cover;
-  border: 1px solid black;
+  border: 1px solid black;;
+}
+
+.battleshipGame {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .boardRow {
