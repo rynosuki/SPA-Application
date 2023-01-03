@@ -12,6 +12,7 @@ export default class Memory extends Application {
     this.won = false
     this.moves = 0
     this.winAmount = 16
+    this.completed = 0
 
     this.board = [[undefined, undefined, undefined, undefined],
       [undefined, undefined, undefined, undefined],
@@ -70,50 +71,53 @@ export default class Memory extends Application {
     this.main.querySelector('#myList').addEventListener('change', e => this.changeBoardSize(e))
   }
 
-  turnCard (target) {
-    if (!this.won) {
-      this.moves++
+  async turnCard (target) {
+    if (target.className === 'memoryButtons') {
+      if (target === this.lastEventTarget) {
+        return
+      }
+      if (this.won) {
+        return
+      }
+
       const x = parseInt(target.children[0].id[0])
       const y = parseInt(target.children[0].id[1])
 
       this.currentObjectUp = this.board[x][y]
-      const valueCard = this.currentObjectUp.turnCard(this.currentObjectUp)
-      console.log('Last object = ', this.lastObjectUp, 'Current object = ', this.currentObjectUp)
+      if (this.currentObjectUp.complete) {
+        return
+      }
+
+      const valueCard = this.currentObjectUp.getValue()
       target.style.backgroundImage = `url(../img/memory/${valueCard}.png)`
-      if (this.lastObjectUp !== undefined) {
-        if (this.currentObjectUp.getValue() === this.lastObjectUp.getValue()) {
-          this.lastObjectUp.setComplete()
-          this.currentObjectUp.setComplete()
-        } else {
+
+      if (this.lastObjectUp === undefined) {
+        this.lastObjectUp = this.currentObjectUp
+        this.lastEventTarget = target
+        this.currentObjectUp = undefined
+        return
+      }
+
+      if (valueCard === this.lastObjectUp.getValue()) {
+        this.lastObjectUp.setComplete()
+        this.currentObjectUp.setComplete()
+        this.completed += 2
+      } else {
+        console.log(this.lastEventTarget)
+        await new Promise(resolve => setTimeout(resolve, 500)).then(() => {
           this.lastEventTarget.style.backgroundImage = 'url(../img/memory/none.png)'
           target.style.backgroundImage = 'url(../img/memory/none.png)'
-        }
-        this.lastObjectUp = undefined
-        this.currentObjectUp = undefined
+        })
       }
-      this.lastEventTarget = target
-      this.lastObjectUp = this.currentObjectUp
+      this.lastObjectUp = undefined
       this.currentObjectUp = undefined
-      let currentMoves = 0
-      for (const i of this.board) {
-        for (const j of i) {
-          if (j.complete) {
-            currentMoves++
-          }
-        }
-      }
-      if (currentMoves === this.winAmount) {
-        const winMessage = document.createElement('div')
-        winMessage.className = 'memoryWinMessage'
-        winMessage.style.width = `${this.body.clientWidth / 2}px`
-        winMessage.style.height = `${this.body.clientHeight / 2}px`
+      this.lastEventTarget = undefined
+      this.moves++
+    }
 
-        const winText = document.createElement('label')
-        winText.innerHTML = `You WON in ${this.moves / 2} moves!`
-        winMessage.append(winText)
-        this.body.append(winMessage)
-        this.won = true
-      }
+    if (this.completed === this.winAmount) {
+      this.won = true
+      this.main.innerHTML += `<h1>You won in ${this.moves} moves!</h1>`
     }
   }
 

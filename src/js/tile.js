@@ -7,13 +7,7 @@ export default class Tile {
     this.complete = false
   }
 
-  turnCard () {
-    if (!this.complete) {
-      return this.tiles[this.#value]
-    }
-  }
-
-  turnBack () {
+  getEmpty () {
     return this.empty
   }
 
