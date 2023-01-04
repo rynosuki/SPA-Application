@@ -75,14 +75,14 @@ You should add one additional window application to your PWD. It should be devel
 
 ### Fulfill some (at least three) requirements to enhace your chat application. Here are suggestions and feel free to add your own enhancements.
 
-* Ability to choose which channel to listen to.
+* Ability to choose which channel to listen to. X
 * Caching message history.
 * Added support for emojis.
 * Added support for writing code.
-* Ability to change username.
-* Encrypted messages on a special channel to allow secret communication.
+* Ability to change username. X
+* Encrypted messages on a special channel to allow secret communication. X
 * Added functionality to the "chat protocol". Discuss with others in the course and agree upon added functionality to add to the sent messages.
-* Use the messages to play memory against an opponent. Perferably using a seperate channel.
+* Use the messages to play memory against an opponent. X Perferably using a seperate channel.
 # F7: Additional enhancements (OPTIONAL)
 ## This is an optional feature that might help you to a higher grade. You need to have implemented F6 to be able to solve this requirement.
 
