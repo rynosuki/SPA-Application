@@ -48,7 +48,7 @@ body {
   position: absolute;
   border: 5px solid black;
   background-color: rgb(255, 235, 205);
-  min-width: 200px;
+  min-width: 300px;
 }
 
 .appMain {
@@ -110,13 +110,17 @@ body {
   position: relative;
   box-sizing: border-box;
   border: 1px solid black;
-  left: 10px;
   background-color: white;
   width: 215px;
   margin-bottom: 10px;
   max-height: 200px;
   height: 200px;
   overflow-y: scroll;
+}
+
+#usernameChat:hover {
+  cursor: pointer;
+  color: darkblue;
 }
 
 #chat p {

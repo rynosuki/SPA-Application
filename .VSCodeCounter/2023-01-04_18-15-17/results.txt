@@ -1,0 +1,54 @@
+Date : 2023-01-04 18:15:17
+Directory : c:\Users\robin\a3-spa
+Total : 20 files,  1021 codes, 235 comments, 180 blanks, all 1436 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |          9 |        698 |         72 |        110 |        880 |
+| CSS        |          3 |        168 |          5 |         30 |        203 |
+| JSON       |          5 |         84 |        158 |          2 |        244 |
+| Markdown   |          2 |         55 |          0 |         37 |         92 |
+| HTML       |          1 |         16 |          0 |          1 |         17 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                            | files      | code       | comment    | blank      | total      |
++-------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                               |         20 |      1,021 |        235 |        180 |      1,436 |
+| . (Files)                                       |          7 |        165 |        158 |         41 |        364 |
+| .vs                                             |          2 |         12 |          0 |          0 |         12 |
+| src                                             |         11 |        844 |         77 |        139 |      1,060 |
+| src (Files)                                     |          1 |         16 |          0 |          1 |         17 |
+| src\css                                         |          3 |        168 |          5 |         30 |        203 |
+| src\js                                          |          7 |        660 |         72 |        108 |        840 |
++-------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                        | language   | code       | comment    | blank      | total      |
++-------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\robin\a3-spa\.eslintrc.js              | JavaScript |         25 |          0 |          1 |         26 |
+| c:\Users\robin\a3-spa\.jsdoc.json               | JSON       |         30 |          0 |          1 |         31 |
+| c:\Users\robin\a3-spa\.stylelintrc.json         | JSON       |          3 |        158 |          0 |        161 |
+| c:\Users\robin\a3-spa\.vs\ProjectSettings.json  | JSON       |          3 |          0 |          0 |          3 |
+| c:\Users\robin\a3-spa\.vs\VSWorkspaceState.json | JSON       |          9 |          0 |          0 |          9 |
+| c:\Users\robin\a3-spa\README.md                 | Markdown   |          1 |          0 |          1 |          2 |
+| c:\Users\robin\a3-spa\package.json              | JSON       |         39 |          0 |          1 |         40 |
+| c:\Users\robin\a3-spa\src\css\app1.css          | CSS        |          0 |          0 |          1 |          1 |
+| c:\Users\robin\a3-spa\src\css\app2.css          | CSS        |          0 |          0 |          1 |          1 |
+| c:\Users\robin\a3-spa\src\css\style.css         | CSS        |        168 |          5 |         28 |        201 |
+| c:\Users\robin\a3-spa\src\index.html            | HTML       |         16 |          0 |          1 |         17 |
+| c:\Users\robin\a3-spa\src\js\application.js     | JavaScript |         59 |          0 |         14 |         73 |
+| c:\Users\robin\a3-spa\src\js\battleship.js      | JavaScript |        211 |          1 |         23 |        235 |
+| c:\Users\robin\a3-spa\src\js\battleshipcell.js  | JavaScript |         11 |          0 |          1 |         12 |
+| c:\Users\robin\a3-spa\src\js\chat.js            | JavaScript |        159 |         49 |         31 |        239 |
+| c:\Users\robin\a3-spa\src\js\index.js           | JavaScript |         67 |         14 |         12 |         93 |
+| c:\Users\robin\a3-spa\src\js\memory.js          | JavaScript |        135 |          8 |         23 |        166 |
+| c:\Users\robin\a3-spa\src\js\tile.js            | JavaScript |         18 |          0 |          4 |         22 |
+| c:\Users\robin\a3-spa\todo.md                   | Markdown   |         54 |          0 |         36 |         90 |
+| c:\Users\robin\a3-spa\vite.config.js            | JavaScript |         13 |          0 |          1 |         14 |
+| Total                                           |            |      1,021 |        235 |        180 |      1,436 |
++-------------------------------------------------+------------+------------+------------+------------+------------+

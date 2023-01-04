@@ -1,5 +1,8 @@
 import Application from './application'
 
+/**
+ * Chat application
+ */
 export default class Chat extends Application {
   constructor () {
     super()
@@ -7,6 +10,7 @@ export default class Chat extends Application {
     this.maxMessageLength = 24
     this.listeningChannel = 'Robin'
     this.userName = localStorage.getItem('username')
+    this.windowCreated = false
 
     this.messages = document.createElement('div')
     this.getUsername = document.createElement('div')
@@ -23,100 +27,164 @@ export default class Chat extends Application {
     }
   }
 
+  /**
+   * Renders the username input request
+   *
+   * @param {*} body The body of the window
+   */
   renderGetUsername (body) {
+    while (this.main.firstChild) {
+      this.main.removeChild(this.main.lastChild)
+    }
+
+    // Setup input div
     const inputDiv = document.createElement('div')
     inputDiv.className = 'inputDiv'
 
+    // Setup input textbox
     const input = document.createElement('input')
     input.type = 'text'
     input.id = 'message-input'
     input.placeholder = 'Enter your username'
     inputDiv.appendChild(input)
 
+    // Setup send button
     const button = document.createElement('button')
     button.id = 'send-button'
     button.innerText = 'Send'
     inputDiv.appendChild(button)
 
-    this.body.appendChild(inputDiv)
+    this.main.appendChild(inputDiv)
+
+    // Add event listener to send button to set username
     button.addEventListener('click', () => {
       const userName = input.value
       localStorage.setItem('username', userName)
+      this.userName = userName
       this.renderWindow(body)
-      inputDiv.remove()
     })
   }
 
+  /**
+   * Renders the chat window
+   *
+   * @param {*} body The body of the window
+   */
   renderWindow (body) {
+    // Clear the main div
     while (this.main.firstChild) {
       this.main.removeChild(this.main.lastChild)
     }
-    this.body.className = 'app'
-    this.body.id = 'chat'
-    this.body.style.left = `${body.clientWidth / 2}px`
-    this.body.style.top = `${(body.clientHeight - 80) / 2}px`
-    this.body.style.paddingBottom = '10px'
-    body.appendChild(this.body)
 
-    if (this.header.lastChild.textContent !== 'Chat App') {
-      const title = document.createElement('h1')
-      title.innerText = 'Chat App'
-      this.header.appendChild(title)
+    if (!this.windowCreated) {
+      this.windowCreated = true
+      // Setup the body
+      this.body.className = 'app'
+      this.body.id = 'chat'
+      this.body.style.left = `${body.clientWidth / 2}px`
+      this.body.style.top = `${(body.clientHeight - 80) / 2}px`
+      this.body.style.paddingBottom = '10px'
+      body.appendChild(this.body)
+
+      // Setup the header
+      if (this.header.lastChild.textContent !== 'Chat App') {
+        const title = document.createElement('h1')
+        title.innerText = 'Chat App'
+        this.header.appendChild(title)
+      }
     }
 
+    // If the user has not set a username, render the username input
     if (this.userName === null) {
       this.renderGetUsername(body)
       return
     }
 
+    // Setup the main
     this.messages.className = 'messagesDiv'
-    this.body.appendChild(this.messages)
+
+    const divUsername = document.createElement('div')
+    const textUserName = document.createElement('p')
+    textUserName.id = 'usernameChat'
+    textUserName.innerText = 'Username: ' + this.userName
+    divUsername.appendChild(textUserName)
+    this.main.appendChild(divUsername)
+
+    divUsername.addEventListener('click', () => this.changeUsername())
 
     this.currentChannel.innerText = 'Channel: ' + this.listeningChannel
     this.main.appendChild(this.currentChannel)
+    this.main.appendChild(this.messages)
 
+    // Setup the input div
     const inputDiv = document.createElement('div')
     inputDiv.className = 'inputDiv'
-    this.body.appendChild(inputDiv)
+    this.main.appendChild(inputDiv)
 
+    // Setup the input field
     const input = document.createElement('input')
     input.type = 'text'
     input.id = 'message-input'
     input.placeholder = 'Enter your message'
     inputDiv.appendChild(input)
 
+    // Setup the send button
     const button = document.createElement('button')
     button.id = 'send-button'
     button.innerText = 'Send'
     inputDiv.appendChild(button)
 
+    // Add event listener to the send button to use the sendMessage function
     button.addEventListener('click', () => {
+      console.log(input.value)
       if (input.value.includes('/join')) {
         this.listeningChannel = input.value.split(' ')[1]
         this.currentChannel.innerText = 'Channel: ' + this.listeningChannel
       } else {
-        this.sendMessage(input.value, this.userName, 'Robin')
+        this.sendMessage(input.value)
       }
       input.value = ''
     })
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        button.click()
+      }
+    })
   }
 
-  sendMessage (message, username) {
+  /**
+   * Sends a message to the server
+   *
+   * @param {*} message The message to send
+   */
+  sendMessage (message) {
     // Check if message is longer than 24 characters if so return
     if (message.length > this.maxMessageLength) {
       return
     }
 
+    // Check if message is in channel Robin if so cypher and send
+    if (this.listeningChannel === 'Robin') {
+      message = this.cypher(message, 'cypher')
+    }
+
     this.ws.send(JSON.stringify({
       type: 'message',
-      data: this.cypher(message, this.listeningChannel),
-      username,
+      data: message,
+      username: this.userName,
       channel: this.listeningChannel,
       key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
     }))
   }
 
+  /**
+   * Renders the message to the chatbox.
+   *
+   * @param {*} data The data to render
+   */
   renderMessage (data) {
+    // Check if message is empty if so return
     if (data.data === '') {
       return
     }
@@ -124,9 +192,9 @@ export default class Chat extends Application {
 
     // Check if message is in channel Robin if so decypher
     if (data.channel === 'Robin') {
-      message.innerHTML = this.decypher(data.data, this.listeningChannel)
+      message.innerHTML = data.username + ': ' + this.cypher(data.data, 'decypher')
     } else {
-      message.innerHTML = data.data
+      message.innerHTML = data.username + ': ' + data.data
     }
 
     // Remove any entry above 20
@@ -137,39 +205,34 @@ export default class Chat extends Application {
     this.messages.scrollTop = this.messages.scrollHeight
   }
 
-  cypher (message, listeningChannel) {
+  /**
+   * Cyphers the message if in encrypted channel.
+   *
+   * @param {*} message The message to cypher.
+   * @param {*} type If the message should be cyphered or decyphered.
+   * @returns {*} The cyphered message.
+   */
+  cypher (message, type) {
+    // Cypher using a caesar cypher
     const cypher = 'abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ'
     const cypherMessage = []
-    if (listeningChannel === 'Robin') {
-      for (let i = 0; i < message.length; i++) {
-        const index = cypher.indexOf(message[i])
-        if (index !== -1) {
+    for (let i = 0; i < message.length; i++) {
+      const index = cypher.indexOf(message[i])
+      if (index !== -1) {
+        if (type === 'cypher') {
           cypherMessage.push(cypher[(index + 3) % cypher.length])
         } else {
-          cypherMessage.push(message[i])
+          cypherMessage.push(cypher[(index + cypher.length - 3) % cypher.length])
         }
+      } else {
+        cypherMessage.push(message[i])
       }
-    } else {
-      return message
     }
     return cypherMessage.join('')
   }
 
-  decypher (message, listeningChannel) {
-    const cypher = 'abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ'
-    const cypherMessage = []
-    if (listeningChannel === 'Robin') {
-      for (let i = 0; i < message.length; i++) {
-        const index = cypher.indexOf(message[i])
-        if (index !== -1) {
-          cypherMessage.push(cypher[(index + cypher.length - 3) % cypher.length])
-        } else {
-          cypherMessage.push(message[i])
-        }
-      }
-    } else {
-      return message
-    }
-    return cypherMessage.join('')
+  changeUsername () {
+    this.userName = null
+    this.renderGetUsername(this.body)
   }
 }

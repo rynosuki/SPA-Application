@@ -1,0 +1,15 @@
+"filename", "language", "Markdown", "JSON", "JavaScript", "HTML", "CSS", "comment", "blank", "total"
+"c:\Users\robin\a3-spa\.eslintrc.js", "JavaScript", 0, 0, -25, 0, 0, 0, -1, -26
+"c:\Users\robin\a3-spa\.jsdoc.json", "JSON", 0, -30, 0, 0, 0, 0, -1, -31
+"c:\Users\robin\a3-spa\.stylelintrc.json", "JSON", 0, -3, 0, 0, 0, -158, 0, -161
+"c:\Users\robin\a3-spa\.vs\ProjectSettings.json", "JSON", 0, -3, 0, 0, 0, 0, 0, -3
+"c:\Users\robin\a3-spa\.vs\VSWorkspaceState.json", "JSON", 0, -9, 0, 0, 0, 0, 0, -9
+"c:\Users\robin\a3-spa\README.md", "Markdown", -1, 0, 0, 0, 0, 0, -1, -2
+"c:\Users\robin\a3-spa\package.json", "JSON", 0, -39, 0, 0, 0, 0, -1, -40
+"c:\Users\robin\a3-spa\src\css\app1.css", "CSS", 0, 0, 0, 0, 0, 0, -1, -1
+"c:\Users\robin\a3-spa\src\css\app2.css", "CSS", 0, 0, 0, 0, 0, 0, -1, -1
+"c:\Users\robin\a3-spa\src\css\style.css", "CSS", 0, 0, 0, 0, -168, -5, -28, -201
+"c:\Users\robin\a3-spa\src\index.html", "HTML", 0, 0, 0, -16, 0, 0, -1, -17
+"c:\Users\robin\a3-spa\todo.md", "Markdown", -54, 0, 0, 0, 0, 0, -36, -90
+"c:\Users\robin\a3-spa\vite.config.js", "JavaScript", 0, 0, -13, 0, 0, 0, -1, -14
+"Total", "-", -55, -84, -38, -16, -168, -163, -72, -596

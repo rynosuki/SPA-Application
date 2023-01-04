@@ -1,6 +1,9 @@
 import Application from './application.js'
 import Tile from './tile.js'
 
+/**
+ * Memory application
+ */
 export default class Memory extends Application {
   constructor () {
     super()
@@ -33,9 +36,14 @@ export default class Memory extends Application {
     }
   }
 
-  renderWindow (e) {
+  /**
+   * Renders the window.w
+   *
+   * @param {*} body The body of the window.
+   */
+  renderWindow (body) {
     if (this.windowBody === undefined) {
-      this.windowBody = e
+      this.windowBody = body
     }
     this.body.className = 'app'
     this.body.style.left = `${this.windowBody.clientWidth / 2}px`
@@ -71,6 +79,11 @@ export default class Memory extends Application {
     this.main.querySelector('#myList').addEventListener('change', e => this.changeBoardSize(e))
   }
 
+  /**
+   * Turns a card and checks if it matches.
+   *
+   * @param {*} target The target card.
+   */
   async turnCard (target) {
     if (target.className === 'memoryButtons') {
       if (target === this.lastEventTarget) {
@@ -121,6 +134,11 @@ export default class Memory extends Application {
     }
   }
 
+  /**
+   * Changes the board size.
+   *
+   * @param {*} e The event.
+   */
   changeBoardSize (e) {
     const newSize = e.target.options[e.target.selectedIndex].text
     console.log(this.main)
