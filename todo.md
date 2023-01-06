@@ -17,17 +17,17 @@
 
 ### The following three window applications should at least be included in the desktop application:
 
-* [ ] A memory game.
-* [ ] A chat connected to a central chat channel using websockets.
-* [ ] One, by you, designed and decided application (perhaps the quiz or another application).
+* [X] A memory game.
+* [X] A chat connected to a central chat channel using websockets.
+* [X] One, by you, designed and decided application (perhaps the quiz or another application).
 # F2: PWD Non functional requirements
 1. [ ] A complete git commit history should be present for assessment. For this assignment somewhere between 30 and 200 commits is normal
 
-2. [ ] The code standard standard.js should be followed. Use the development environment you learnt earlier.
+2. [X] The code standard standard.js should be followed. Use the development environment you learnt earlier.
 
-3. [ ] All exported functions, modules and classes should be commented using JSDoc.
+3. [X] All exported functions, modules and classes should be commented using JSDoc.
 
-4. [ ] The linters should pass without notices when running npm test.
+4. [X] The linters should pass without notices when running npm test.
 
 5. [X] The code shall be organized in appropriate ES modules, at least four (4).
 
@@ -73,16 +73,16 @@ You should add one additional window application to your PWD. It should be devel
 # F6: An enhanced chat application (OPTIONAL)
 ## This is an optional feature that might help you to a higher grade.
 
-### Fulfill some (at least three) requirements to enhace your chat application. Here are suggestions and feel free to add your own enhancements.
+### Fulfill some (at least three) requirements to enhance your chat application. Here are suggestions and feel free to add your own enhancements.
 
-* Ability to choose which channel to listen to. X
-* Caching message history.
-* Added support for emojis.
-* Added support for writing code.
-* Ability to change username. X
-* Encrypted messages on a special channel to allow secret communication. X
-* Added functionality to the "chat protocol". Discuss with others in the course and agree upon added functionality to add to the sent messages.
-* Use the messages to play memory against an opponent. X Perferably using a seperate channel.
+* [X] Ability to choose which channel to listen to.
+* [ ] Caching message history.
+* [ ] Added support for emojis.
+* [ ] Added support for writing code.
+* [X] Ability to change username.
+* [X] Encrypted messages on a special channel to allow secret communication.
+* [ ] Added functionality to the "chat protocol". Discuss with others in the course and agree upon added functionality to add to the sent messages.
+* [ ] Use the messages to play memory against an opponent. Perferably using a seperate channel.
 # F7: Additional enhancements (OPTIONAL)
 ## This is an optional feature that might help you to a higher grade. You need to have implemented F6 to be able to solve this requirement.
 
