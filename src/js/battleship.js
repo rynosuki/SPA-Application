@@ -7,9 +7,9 @@ export default class Battleship extends Application {
     this.appName = 'Battleship'
     this.header.innerHTML += `<h1>${this.appName}</h1>`
     this.windowBody = undefined
-    this.userName = 'Ryno'
-    if (localStorage.getItem('username') !== null) {
-      this.userName = localStorage.getItem('username')
+    this.userName = undefined
+    if (sessionStorage.getItem('username') !== null) {
+      this.userName = sessionStorage.getItem('username')
     }
 
     this.ws = new WebSocket('wss://courselab.lnu.se/message-app/socket')
@@ -198,6 +198,7 @@ export default class Battleship extends Application {
 
   socketCommunication (data, type) {
     if (type === 'send') {
+      console.log(data, type)
       this.ws.send(JSON.stringify({
         type: 'message',
         data,
@@ -206,10 +207,11 @@ export default class Battleship extends Application {
         key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
       }))
     } else if (type === 'receive') {
+      console.log(data, type, this.userName)
       if (data.username === this.userName) {
         return
       }
-
+      console.log(data, type)
       console.log('Hit? = ', data.data.hit)
       if (data.data.hit !== undefined) {
         const tileX = parseInt(data.data.x)

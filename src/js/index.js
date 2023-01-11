@@ -7,11 +7,27 @@ const body = document.querySelector('.body')
 const footer = document.querySelector('.footer')
 const activeApps = []
 
+renderLogin()
+
 renderApps()
 renderTime()
 
 /**
- *
+ * Renders the login screen
+ */
+function renderLogin () {
+  const tempDiv = document.createElement('div')
+  tempDiv.className = 'login'
+
+  const tempLabel = document.createElement('p')
+  tempLabel.innerText = 'Username'
+
+  tempDiv.appendChild(tempLabel)
+  body.appendChild(tempDiv)
+}
+
+/**
+ * Renders the app buttons
  */
 function renderApps () {
   const apps = ['memoryapp', 'chatapp', 'battleshipapp']
@@ -50,7 +66,7 @@ footer.addEventListener('pointerdown', function (e) {
 })
 
 /**
- *
+ * Renders the clock in top right corner
  */
 function renderTime () {
   const tempText = document.createElement('label')

@@ -9,7 +9,7 @@ export default class Chat extends Application {
     this.appName = 'Chat'
     this.maxMessageLength = 24
     this.listeningChannel = 'Robin'
-    this.userName = localStorage.getItem('username')
+    this.userName = sessionStorage.getItem('username')
     this.windowCreated = false
 
     this.messages = document.createElement('div')
@@ -59,7 +59,7 @@ export default class Chat extends Application {
     // Add event listener to send button to set username
     button.addEventListener('click', () => {
       const userName = input.value
-      localStorage.setItem('username', userName)
+      sessionStorage.setItem('username', userName)
       this.userName = userName
       this.renderWindow(body)
     })
