@@ -46,12 +46,15 @@ export default class Memory extends Application {
     if (this.windowBody === undefined) {
       this.windowBody = body
     }
+
+    // Place the app somewhat centered.
     this.body.className = 'app'
     this.body.style.left = `${this.windowBody.clientWidth / 2}px`
     this.body.style.top = `${(this.windowBody.clientHeight - 80) / 2}px`
     this.body.style.paddingBottom = '10px'
     this.windowBody.appendChild(this.body)
 
+    // Create the game board and render it.
     for (let i = 0; i < this.board.length; i++) {
       const buttonContainer = document.createElement('div')
       buttonContainer.className = 'memoryButtonContainer'
@@ -73,6 +76,7 @@ export default class Memory extends Application {
     dropDownDiv.className = 'dropDownDiv'
     this.main.append(dropDownDiv)
 
+    // Create the drop down menu for the board size.
     dropDownDiv.innerHTML += `
     <select id = "myList">  
     <option> ---Size--- </option>  
@@ -82,6 +86,7 @@ export default class Memory extends Application {
     </select>
     `
 
+    // Create the drop down menu for the board style.
     dropDownDiv.innerHTML += `
     <select id = "gameStyle">  
     <option> ---Style--- </option>  
@@ -100,26 +105,32 @@ export default class Memory extends Application {
    * @param {*} target The target card.
    */
   async turnCard (target) {
+    // Check if the target is a card and if it is the same card as last time.
     if (target.id === 'myList' || target.id === 'gameStyle' || target === this.lastEventTarget) {
       return
     }
 
+    // Check if the game is won.
     if (this.won) {
       return
     }
 
+    // Get the x and y coordinates of the card.
     const x = parseInt(target.children[0].id[0])
     const y = parseInt(target.children[0].id[1])
 
+    // Check if the card is already turned.
     this.currentObjectUp = this.board[x][y]
     if (this.currentObjectUp.complete) {
       this.currentObjectUp = undefined
       return
     }
 
+    // Turn the card.
     const valueCard = this.currentObjectUp.getValue()
     target.style.backgroundImage = `url(../img/memory/${this.gameStyle + valueCard}.png)`
 
+    // Check if the card is the first card turned.
     if (this.lastObjectUp === undefined) {
       this.lastObjectUp = this.currentObjectUp
       this.lastEventTarget = target
@@ -127,6 +138,7 @@ export default class Memory extends Application {
       return
     }
 
+    // Check if the card is the same as the last card turned.
     if (valueCard === this.lastObjectUp.getValue()) {
       this.lastObjectUp.setComplete()
       this.currentObjectUp.setComplete()
@@ -142,6 +154,7 @@ export default class Memory extends Application {
     this.lastEventTarget = undefined
     this.moves++
 
+    // Check if the game is won.
     if (this.completed === this.winAmount) {
       this.won = true
       const winMessage = document.createElement('h1')
@@ -157,10 +170,11 @@ export default class Memory extends Application {
    */
   changeBoardSize (e) {
     const newSize = e.target.options[e.target.selectedIndex].text
+    // Remove the old board.
     while (this.main.firstChild) {
       this.main.removeChild(this.main.lastChild)
     }
-    console.log(this.main)
+    // Reset constructor variables.
     this.currentObjectUp = undefined
     this.lastObjectUp = undefined
     this.lastEventTarget = undefined
@@ -172,6 +186,7 @@ export default class Memory extends Application {
     const y = parseInt(newSize[2])
     this.winAmount = (x * y)
 
+    // Create the new board.
     this.values = []
     for (let i = 0; i < x * y; i++) {
       this.values.push(Math.floor(i / 2))
@@ -189,11 +204,16 @@ export default class Memory extends Application {
     this.renderWindow(this.body)
   }
 
+  /**
+   * Changes the board style.
+   *
+   * @param {*} e The event.
+   */
   changeBoardStyle (e) {
     if (e.target.options[e.target.selectedIndex].text === 'Robin') {
-      this.boardStyle = 'r'
+      this.gameStyle = 'r'
     } else if (e.target.options[e.target.selectedIndex].text === 'Characters') {
-      this.boardStyle = 'v'
+      this.gameStyle = 'v'
     }
 
     for (let i = 0; i < this.board.length; i++) {

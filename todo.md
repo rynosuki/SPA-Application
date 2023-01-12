@@ -21,7 +21,7 @@
 * [X] A chat connected to a central chat channel using websockets.
 * [X] One, by you, designed and decided application (perhaps the quiz or another application).
 # F2: PWD Non functional requirements
-1. [ ] A complete git commit history should be present for assessment. For this assignment somewhere between 30 and 200 commits is normal
+1. [X] A complete git commit history should be present for assessment. For this assignment somewhere between 30 and 200 commits is normal
 
 2. [X] The code standard standard.js should be followed. Use the development environment you learnt earlier.
 
@@ -31,7 +31,7 @@
 
 5. [X] The code shall be organized in appropriate ES modules, at least four (4).
 
-6. [ ] The application shall be visually appealing.
+6. [X] The application shall be visually appealing.
 
 # F3: Memory game window application
 ## Read for a description of the memory application.

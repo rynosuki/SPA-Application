@@ -98,7 +98,6 @@ export default class Chat extends Application {
 
     // Add event listener to the send button to use the sendMessage function
     button.addEventListener('click', () => {
-      console.log(input.value)
       if (input.value.includes('/join')) {
         this.listeningChannel = input.value.split(' ')[1]
         this.currentChannel.innerText = 'Channel: ' + this.listeningChannel

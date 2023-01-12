@@ -1,4 +1,5 @@
 export default class Application {
+  // Create an application object.
   constructor () {
     this.isDragging = false
     this.xOffset = 0
@@ -10,6 +11,7 @@ export default class Application {
 
     this.appName = ''
 
+    // Create the app window.
     this.body = document.createElement('div')
     this.body.className = 'app'
     this.body.tabIndex = 0
@@ -30,12 +32,14 @@ export default class Application {
     this.body.appendChild(this.header)
     this.body.appendChild(this.main)
 
+    // Add event listener to close the app.
     this.header.addEventListener('click', e => {
       if (e.target.className === 'appCloseButton') {
         e.target.parentNode.parentNode.remove()
       }
     })
 
+    // Add event listeners to drag the app.
     this.header.addEventListener('mousedown', (e) => {
       e.target.focus()
       this.initialX = e.clientX - this.xOffset

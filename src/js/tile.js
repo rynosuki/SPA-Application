@@ -1,5 +1,7 @@
 export default class Tile {
   #value
+
+  // Create a tile object.
   constructor (value) {
     this.tiles = ['game_1', 'game_2', 'game_3', 'game_4', 'game_5', 'game_6', 'game_7', 'game_8']
     this.empty = 'none'

@@ -96,17 +96,38 @@ function renderUsername () {
 function renderApps () {
   const apps = ['memoryapp', 'chatapp', 'battleshipapp']
   for (const appName of apps) {
-    console.log(appName)
     const tempDiv = document.createElement('div')
     const tempElement = document.createElement('button')
     tempElement.style.display = 'none'
     tempDiv.append(tempElement)
+
+    const appToolTip = document.createElement('p')
+    appToolTip.id = 'appTooltip'
+    appToolTip.innerHTML = 'Start ' + appName
+    appToolTip.style.display = 'none'
+    tempDiv.append(appToolTip)
 
     tempDiv.name = appName
     tempDiv.style.width = '50px'
     tempDiv.style.height = '50px'
     tempDiv.style.backgroundImage = `url(../img/apps/${appName}.png)`
     footer.append(tempDiv)
+
+    tempDiv.addEventListener('mouseover', () => {
+      appToolTip.style.display = 'block'
+      appToolTip.style.top = '-40px'
+      appToolTip.style.position = 'relative'
+      appToolTip.style.textAlign = 'center'
+      appToolTip.style.backgroundColor = 'black'
+      appToolTip.style.color = 'white'
+      appToolTip.style.width = 'fit-content'
+      appToolTip.style.paddingLeft = '5px'
+      appToolTip.style.paddingRight = '5px'
+    })
+
+    tempDiv.addEventListener('mouseleave', () => {
+      appToolTip.style.display = 'none'
+    })
   }
 }
 
