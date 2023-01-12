@@ -8,7 +8,6 @@ const footer = document.querySelector('.footer')
 const activeApps = []
 
 renderLogin()
-
 renderApps()
 renderTime()
 
@@ -20,9 +19,28 @@ function renderLogin () {
   tempDiv.className = 'login'
 
   const tempLabel = document.createElement('p')
-  tempLabel.innerText = 'Username'
+  tempLabel.innerHTML = 'Username:'
+
+  const tempInput = document.createElement('input')
+  tempInput.type = 'text'
+  tempInput.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      tempButton.click()
+    }
+  })
+
+  const tempButton = document.createElement('button')
+  tempButton.innerHTML = 'Login'
+  tempButton.addEventListener('click', () => {
+    if (tempInput.value !== '') {
+      sessionStorage.setItem('username', tempInput.value)
+      tempDiv.remove()
+    }
+  })
 
   tempDiv.appendChild(tempLabel)
+  tempDiv.appendChild(tempInput)
+  tempDiv.appendChild(tempButton)
   body.appendChild(tempDiv)
 }
 
