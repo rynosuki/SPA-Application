@@ -16,6 +16,7 @@ export default class Memory extends Application {
     this.moves = 0
     this.winAmount = 16
     this.completed = 0
+    this.gameStyle = 'v'
 
     this.board = [[undefined, undefined, undefined, undefined],
       [undefined, undefined, undefined, undefined],
@@ -68,15 +69,29 @@ export default class Memory extends Application {
       }
     }
 
-    this.main.innerHTML += `
+    const dropDownDiv = document.createElement('div')
+    dropDownDiv.className = 'dropDownDiv'
+    this.main.append(dropDownDiv)
+
+    dropDownDiv.innerHTML += `
     <select id = "myList">  
     <option> ---Board Size--- </option>  
-    <option> 4x4 </option>  
-    <option> 2x4 </option>  
-    <option> 2x2 </option>  
+    <option> 4x4 </option>
+    <option> 2x4 </option>
+    <option> 2x2 </option>
     </select>
     `
+
+    dropDownDiv.innerHTML += `
+    <select id = "gameStyle">  
+    <option> ---Board Style--- </option>  
+    <option> Robin </option>  
+    <option> Characters </option>  
+    </select>
+    `
+
     document.getElementById('myList').addEventListener('change', e => this.changeBoardSize(e))
+    document.getElementById('gameStyle').addEventListener('change', e => this.changeBoardStyle(e))
   }
 
   /**
@@ -85,7 +100,7 @@ export default class Memory extends Application {
    * @param {*} target The target card.
    */
   async turnCard (target) {
-    if (target.id === 'myList' || target === this.lastEventTarget) {
+    if (target.id === 'myList' || target.id === 'gameStyle' || target === this.lastEventTarget) {
       return
     }
 
@@ -103,7 +118,7 @@ export default class Memory extends Application {
     }
 
     const valueCard = this.currentObjectUp.getValue()
-    target.style.backgroundImage = `url(../img/memory/${valueCard}.png)`
+    target.style.backgroundImage = `url(../img/memory/${this.gameStyle + valueCard}.png)`
 
     if (this.lastObjectUp === undefined) {
       this.lastObjectUp = this.currentObjectUp
@@ -117,10 +132,9 @@ export default class Memory extends Application {
       this.currentObjectUp.setComplete()
       this.completed += 2
     } else {
-      console.log(this.lastEventTarget)
       await new Promise(resolve => setTimeout(resolve, 500)).then(() => {
-        this.lastEventTarget.style.backgroundImage = 'url(../img/memory/none.png)'
-        target.style.backgroundImage = 'url(../img/memory/none.png)'
+        this.lastEventTarget.style.backgroundImage = 'url(../img/memory/rnone.png)'
+        target.style.backgroundImage = 'url(../img/memory/rnone.png)'
       })
     }
     this.lastObjectUp = undefined
@@ -173,5 +187,22 @@ export default class Memory extends Application {
     }
 
     this.renderWindow(this.body)
+  }
+
+  changeBoardStyle (e) {
+    if (e.target.options[e.target.selectedIndex].text === 'Robin') {
+      this.boardStyle = 'r'
+    } else if (e.target.options[e.target.selectedIndex].text === 'Characters') {
+      this.boardStyle = 'v'
+    }
+
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[i].length; j++) {
+        const x = this.board[i][j].getValue()
+        if (this.board[i][j].complete) {
+          document.getElementById(`${i}${j}`).parentElement.style.backgroundImage = `url(../img/memory/${this.boardStyle + x}.png)`
+        }
+      }
+    }
   }
 }

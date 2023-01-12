@@ -35,6 +35,11 @@ function renderLogin () {
     if (tempInput.value !== '') {
       sessionStorage.setItem('username', tempInput.value)
       tempDiv.remove()
+      const userNameText = document.createElement('p')
+      userNameText.id = 'username'
+      userNameText.innerHTML = `Logged in as ${tempInput.value}`
+      userNameText.style.color = 'white'
+      header.append(userNameText)
     }
   })
 

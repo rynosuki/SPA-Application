@@ -51,6 +51,14 @@ body {
   background-color: black;
 }
 
+.header p {
+  margin: 0;
+  margin-top: 5px;
+  padding: 0;
+  color: white;
+  padding-left: 5px;
+}
+
 .footer {
   padding-left: 2vw;
   box-sizing: border-box;
@@ -183,7 +191,8 @@ body {
 .memoryButtons {
   width: 50px;
   height: 50px;
-  background-image: url(../img/memory/none.png);
+  background-image: url(../img/memory/rnone.png);
+  background-size: cover;
 }
 
 .memoryButtons button {

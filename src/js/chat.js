@@ -61,6 +61,7 @@ export default class Chat extends Application {
       const userName = input.value
       sessionStorage.setItem('username', userName)
       this.userName = userName
+      document.getElementById('username').innerHTML = 'Logged in as: ' + this.userName
       this.renderWindow(body)
     })
   }
