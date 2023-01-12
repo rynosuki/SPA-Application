@@ -15,36 +15,7 @@ initMain()
  * Initializes program
  */
 function initMain () {
-  const userNameDiv = document.createElement('div')
-  const userNameText = document.createElement('p')
-  userNameText.id = 'username'
-  userNameText.innerHTML = 'Not currently logged in.'
-  userNameText.style.color = 'white'
-  userNameDiv.append(userNameText)
-
-  const userNameTooltip = document.createElement('p')
-  userNameTooltip.id = 'usernameTooltip'
-  userNameTooltip.innerHTML = 'Click to change username'
-  userNameTooltip.style.display = 'none'
-  userNameDiv.append(userNameTooltip)
-  header.append(userNameDiv)
-
-  userNameDiv.addEventListener('mouseover', () => {
-    userNameTooltip.style.display = 'block'
-    userNameTooltip.style.backgroundColor = 'black'
-    userNameTooltip.style.width = 'fit-content'
-    userNameTooltip.style.paddingLeft = '5px'
-    userNameTooltip.style.paddingRight = '5px'
-  })
-
-  userNameDiv.addEventListener('mouseleave', () => {
-    userNameTooltip.style.display = 'none'
-  })
-
-  userNameDiv.addEventListener('click', () => {
-    renderLogin()
-  })
-
+  renderUsername()
   renderLogin()
   renderApps()
   renderTime()
@@ -82,6 +53,41 @@ function renderLogin () {
   tempDiv.appendChild(tempInput)
   tempDiv.appendChild(tempButton)
   body.appendChild(tempDiv)
+}
+
+/**
+ * Render username top left corner
+ */
+function renderUsername () {
+  const userNameDiv = document.createElement('div')
+  const userNameText = document.createElement('p')
+  userNameText.id = 'username'
+  userNameText.innerHTML = 'Not currently logged in.'
+  userNameText.style.color = 'white'
+  userNameDiv.append(userNameText)
+
+  const userNameTooltip = document.createElement('p')
+  userNameTooltip.id = 'usernameTooltip'
+  userNameTooltip.innerHTML = 'Click to change username'
+  userNameTooltip.style.display = 'none'
+  userNameDiv.append(userNameTooltip)
+  header.append(userNameDiv)
+
+  userNameDiv.addEventListener('mouseover', () => {
+    userNameTooltip.style.display = 'block'
+    userNameTooltip.style.backgroundColor = 'black'
+    userNameTooltip.style.width = 'fit-content'
+    userNameTooltip.style.paddingLeft = '5px'
+    userNameTooltip.style.paddingRight = '5px'
+  })
+
+  userNameDiv.addEventListener('mouseleave', () => {
+    userNameTooltip.style.display = 'none'
+  })
+
+  userNameDiv.addEventListener('click', () => {
+    renderLogin()
+  })
 }
 
 /**

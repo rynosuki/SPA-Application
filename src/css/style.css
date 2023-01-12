@@ -15,6 +15,10 @@ body {
   overflow: hidden;
 }
 
+input, button, p, h1, h2, h3, h4, h5, h6, label, select {
+  font-family: monospace;
+}
+
 .login {
   background-color: rgba(255, 255, 255, 0.552);
   max-width: 30vw;
@@ -23,8 +27,10 @@ body {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: calc(50% - 50px);
+  left: calc(50% - 160px);
+  height: 100px;
+  width: 320px;
   padding: 5px;
   border: 5px solid black;
   background-blend-mode: multiply;
@@ -204,9 +210,16 @@ body {
   display: none;
 }
 
-#myList {
-  background-color: aliceblue;
-  border: 1px solid black;
+.dropDownDiv {
+}
+
+#myList, #gameStyle {
+  text-align: center;
+  width: 98px;
+}
+
+select {
+  appearance: none;
 }
 
 /* Application Battleship CSS */

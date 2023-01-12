@@ -75,7 +75,7 @@ export default class Memory extends Application {
 
     dropDownDiv.innerHTML += `
     <select id = "myList">  
-    <option> ---Board Size--- </option>  
+    <option> ---Size--- </option>  
     <option> 4x4 </option>
     <option> 2x4 </option>
     <option> 2x2 </option>
@@ -84,7 +84,7 @@ export default class Memory extends Application {
 
     dropDownDiv.innerHTML += `
     <select id = "gameStyle">  
-    <option> ---Board Style--- </option>  
+    <option> ---Style--- </option>  
     <option> Robin </option>  
     <option> Characters </option>  
     </select>
