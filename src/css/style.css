@@ -15,7 +15,17 @@ body {
   overflow: hidden;
 }
 
-input, button, p, h1, h2, h3, h4, h5, h6, label, select {
+input,
+button,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+select {
   font-family: monospace;
 }
 
@@ -210,10 +220,8 @@ input, button, p, h1, h2, h3, h4, h5, h6, label, select {
   display: none;
 }
 
-.dropDownDiv {
-}
-
-#myList, #gameStyle {
+#myList,
+#gameStyle {
   text-align: center;
   width: 98px;
 }
