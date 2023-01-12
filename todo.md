@@ -83,6 +83,7 @@ You should add one additional window application to your PWD. It should be devel
 * [X] Encrypted messages on a special channel to allow secret communication.
 * [ ] Added functionality to the "chat protocol". Discuss with others in the course and agree upon added functionality to add to the sent messages.
 * [/] Use the messages to play memory against an opponent. Perferably using a seperate channel.
+
 # F7: Additional enhancements (OPTIONAL)
 ## This is an optional feature that might help you to a higher grade. You need to have implemented F6 to be able to solve this requirement.
 
