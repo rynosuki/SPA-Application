@@ -61,12 +61,8 @@ export default class Application {
         this.xOffset = this.currentX
         this.yOffset = this.currentY
 
-        this.setTranslate(this.currentX, this.currentY, this.body)
+        this.body.style.transform = `translate3d(${this.currentX}px, ${this.currentY}px, 0)`
       }
     })
-  }
-
-  setTranslate (xPos, yPos, el) {
-    el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`
   }
 }

@@ -28,45 +28,6 @@ export default class Chat extends Application {
   }
 
   /**
-   * Renders the username input request
-   *
-   * @param {*} body The body of the window
-   */
-  renderGetUsername (body) {
-    while (this.main.firstChild) {
-      this.main.removeChild(this.main.lastChild)
-    }
-
-    // Setup input div
-    const inputDiv = document.createElement('div')
-    inputDiv.className = 'inputDiv'
-
-    // Setup input textbox
-    const input = document.createElement('input')
-    input.type = 'text'
-    input.id = 'message-input'
-    input.placeholder = 'Enter your username'
-    inputDiv.appendChild(input)
-
-    // Setup send button
-    const button = document.createElement('button')
-    button.id = 'send-button'
-    button.innerText = 'Send'
-    inputDiv.appendChild(button)
-
-    this.main.appendChild(inputDiv)
-
-    // Add event listener to send button to set username
-    button.addEventListener('click', () => {
-      const userName = input.value
-      sessionStorage.setItem('username', userName)
-      this.userName = userName
-      document.getElementById('username').innerHTML = 'Logged in as: ' + this.userName
-      this.renderWindow(body)
-    })
-  }
-
-  /**
    * Renders the chat window
    *
    * @param {*} body The body of the window
@@ -217,21 +178,19 @@ export default class Chat extends Application {
     // Cypher using a caesar cypher
     const cypher = 'abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ'
     const cypherMessage = []
-    for (let i = 0; i < message.length; i++) {
-      const index = cypher.indexOf(message[i])
-      if (index !== -1) {
-        if (type === 'cypher') {
-          cypherMessage.push(cypher[(index + 3) % cypher.length])
-        } else {
-          cypherMessage.push(cypher[(index + cypher.length - 3) % cypher.length])
-        }
-      } else {
-        cypherMessage.push(message[i])
+    if (type === 'cypher') {
+      for (const c of message) {
+        cypherMessage.push(cypher[(cypher.indexOf(c) + 3) % cypher.length])
+      }
+    } else {
+      for (const c of message) {
+        cypherMessage.push(cypher[(cypher.indexOf(c) + cypher.length - 3) % cypher.length])
       }
     }
     return cypherMessage.join('')
   }
 
+  // Sets the username then renders get username
   changeUsername () {
     this.userName = null
     this.renderGetUsername(this.body)

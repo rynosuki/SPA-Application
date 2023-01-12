@@ -3,13 +3,52 @@ import Chat from './chat.js'
 import Memory from './memory.js'
 
 const header = document.querySelector('.header')
+header.style.zIndex = '1000'
 const body = document.querySelector('.body')
 const footer = document.querySelector('.footer')
+footer.style.zIndex = '1000'
 const activeApps = []
 
-renderLogin()
-renderApps()
-renderTime()
+initMain()
+
+/**
+ * Initializes program
+ */
+function initMain () {
+  const userNameDiv = document.createElement('div')
+  const userNameText = document.createElement('p')
+  userNameText.id = 'username'
+  userNameText.innerHTML = 'Not currently logged in.'
+  userNameText.style.color = 'white'
+  userNameDiv.append(userNameText)
+
+  const userNameTooltip = document.createElement('p')
+  userNameTooltip.id = 'usernameTooltip'
+  userNameTooltip.innerHTML = 'Click to change username'
+  userNameTooltip.style.display = 'none'
+  userNameDiv.append(userNameTooltip)
+  header.append(userNameDiv)
+
+  userNameDiv.addEventListener('mouseover', () => {
+    userNameTooltip.style.display = 'block'
+    userNameTooltip.style.backgroundColor = 'black'
+    userNameTooltip.style.width = 'fit-content'
+    userNameTooltip.style.paddingLeft = '5px'
+    userNameTooltip.style.paddingRight = '5px'
+  })
+
+  userNameDiv.addEventListener('mouseleave', () => {
+    userNameTooltip.style.display = 'none'
+  })
+
+  userNameDiv.addEventListener('click', () => {
+    renderLogin()
+  })
+
+  renderLogin()
+  renderApps()
+  renderTime()
+}
 
 /**
  * Renders the login screen
@@ -35,11 +74,7 @@ function renderLogin () {
     if (tempInput.value !== '') {
       sessionStorage.setItem('username', tempInput.value)
       tempDiv.remove()
-      const userNameText = document.createElement('p')
-      userNameText.id = 'username'
-      userNameText.innerHTML = `Logged in as ${tempInput.value}`
-      userNameText.style.color = 'white'
-      header.append(userNameText)
+      document.getElementById('username').innerHTML = `Logged in as ${tempInput.value}`
     }
   })
 
@@ -69,6 +104,49 @@ function renderApps () {
   }
 }
 
+/**
+ * Renders the clock in top right corner
+ */
+function renderTime () {
+  const tempText = document.createElement('label')
+  tempText.id = 'clock'
+  tempText.style.position = 'absolute'
+  tempText.style.zIndex = '100'
+  tempText.style.color = 'white'
+  tempText.style.right = '10px'
+  tempText.style.top = '5px'
+  header.appendChild(tempText)
+  displayTime()
+  setInterval(displayTime, 10000)
+}
+
+/**
+ * Displays the current time in the top right corner
+ */
+function displayTime () {
+  // Get the current time
+  const currentTime = new Date()
+
+  // Extract the hours, minutes, and seconds
+  let hours = currentTime.getHours()
+  let minutes = currentTime.getMinutes()
+
+  // Add leading zeros, first convert hours and minutes to strings
+  if (hours < 10) {
+    hours = '0' + hours
+  }
+  if (minutes < 10) {
+    minutes = '0' + minutes
+  }
+
+  // Compose the string for display
+  const currentTimeString = hours + ':' + minutes
+
+  // Display the clock
+  document.getElementById('clock').innerHTML = currentTimeString
+}
+
+// Add eventlistener that starts an application.
 footer.addEventListener('pointerdown', function (e) {
   if (e.target.name !== undefined) {
     let game
@@ -87,45 +165,3 @@ footer.addEventListener('pointerdown', function (e) {
     game.renderWindow(body)
   }
 })
-
-/**
- * Renders the clock in top right corner
- */
-function renderTime () {
-  const tempText = document.createElement('label')
-  tempText.id = 'clock'
-  tempText.style.position = 'absolute'
-  tempText.style.zIndex = '100'
-  tempText.style.color = 'white'
-  tempText.style.right = '10px'
-  tempText.style.top = '5px'
-  header.appendChild(tempText)
-  displayTime()
-  setInterval(displayTime, 10000)
-}
-
-/**
- *
- */
-function displayTime () {
-  // get the current time
-  const currentTime = new Date()
-
-  // extract the hours, minutes, and seconds from the current time
-  let hours = currentTime.getHours()
-  let minutes = currentTime.getMinutes()
-
-  // add a leading zero to the hours, minutes, and seconds if they are less than 10
-  if (hours < 10) {
-    hours = '0' + hours
-  }
-  if (minutes < 10) {
-    minutes = '0' + minutes
-  }
-
-  // create a string that represents the current time
-  const currentTimeString = hours + ':' + minutes
-
-  // display the current time
-  document.getElementById('clock').innerHTML = currentTimeString
-}

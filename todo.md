@@ -48,7 +48,7 @@
 
 2. [X] The user should be able to play the game using only the keyboard (accessability).
 
-3. [ ] One, by you decided, extended feature for the game.
+3. [X] One, by you decided, extended feature for the game.
 
 # F4: Chat window application
 ## Read for a description of the chat application.
@@ -82,7 +82,7 @@ You should add one additional window application to your PWD. It should be devel
 * [X] Ability to change username.
 * [X] Encrypted messages on a special channel to allow secret communication.
 * [ ] Added functionality to the "chat protocol". Discuss with others in the course and agree upon added functionality to add to the sent messages.
-* [ ] Use the messages to play memory against an opponent. Perferably using a seperate channel.
+* [/] Use the messages to play memory against an opponent. Perferably using a seperate channel.
 # F7: Additional enhancements (OPTIONAL)
 ## This is an optional feature that might help you to a higher grade. You need to have implemented F6 to be able to solve this requirement.
 
