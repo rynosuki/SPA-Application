@@ -80,7 +80,7 @@ export default class Battleship extends Application {
         cell.className = 'battleshipBoardCell'
         cell.id = `p${i}${j}`
         if (this.board[i][j].isShip) {
-          cell.style.backgroundImage = `url(./img/battleship/${this.board[i][j].ship}${this.board[i][j].shipPart}.png)`
+          cell.style.backgroundImage = `url(${this.board[i][j].getImageSrc()})`
           cell.style.rotate = `${(this.board[i][j].rotation - 1) * 90}deg`
         }
         row.append(cell)
@@ -135,7 +135,7 @@ export default class Battleship extends Application {
     if (this.board[tileX][tileY].isShip) {
       this.board[tileX][tileY].isHit = true
       const hit = document.createElement('div')
-      hit.style.backgroundImage = 'url(./img/battleship/checked.png)'
+      hit.style.backgroundImage = `url(${this.board[tileX][tileY].imgSrc.checked})`
       hit.style.width = '26px'
       hit.style.height = '26px'
       hit.style.opacity = '0.5'
@@ -144,7 +144,7 @@ export default class Battleship extends Application {
       this.wsSend({ x: tileX, y: tileY, hit: true })
     } else {
       this.board[tileX][tileY].isHit = true
-      document.getElementById(`p${tileX}${tileY}`).style.backgroundImage = 'url(./img/battleship/checked.png)'
+      document.getElementById(`p${tileX}${tileY}`).style.backgroundImage = `url(${this.board[tileX][tileY].imgSrc.checked})`
       this.wsSend({ x: tileX, y: tileY, hit: false })
     }
   }
@@ -302,11 +302,11 @@ export default class Battleship extends Application {
     const tileY = parseInt(data.data.y)
     if (data.data.hit) {
       this.opponentBoard[tileX][tileY].isHit = true
-      document.getElementById(`o${tileX}${tileY}`).style.backgroundImage = 'url(./img/battleship/checked.png)'
+      document.getElementById(`o${tileX}${tileY}`).style.backgroundImage = `url(${this.board[tileX][tileY].imgSrc.checked})`
       document.getElementById(`o${tileX}${tileY}`).style.opacity = '0.5'
     } else {
       this.opponentBoard[tileX][tileY].isHit = true
-      document.getElementById(`o${tileX}${tileY}`).style.backgroundImage = 'url(./img/battleship/checked.png)'
+      document.getElementById(`o${tileX}${tileY}`).style.backgroundImage = `url(${this.board[tileX][tileY].imgSrc.checked})`
     }
   }
 

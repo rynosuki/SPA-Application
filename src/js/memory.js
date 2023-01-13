@@ -127,8 +127,8 @@ export default class Memory extends Application {
     }
 
     // Turn the card.
-    const valueCard = this.currentObjectUp.getValue()
-    target.style.backgroundImage = `url(../img/memory/${this.gameStyle + valueCard}.png)`
+    const valueCard = this.currentObjectUp.getValue(this.gameStyle)
+    target.style.backgroundImage = `url(${valueCard})`
 
     // Check if the card is the first card turned.
     if (this.lastObjectUp === undefined) {
@@ -145,8 +145,8 @@ export default class Memory extends Application {
       this.completed += 2
     } else {
       await new Promise(resolve => setTimeout(resolve, 500)).then(() => {
-        this.lastEventTarget.style.backgroundImage = 'url(../img/memory/rnone.png)'
-        target.style.backgroundImage = 'url(../img/memory/rnone.png)'
+        this.lastEventTarget.style.backgroundImage = `url(${this.currentObjectUp.getEmpty()})`
+        target.style.backgroundImage = `url(${this.currentObjectUp.getEmpty()})`
       })
     }
     this.lastObjectUp = undefined
@@ -200,7 +200,6 @@ export default class Memory extends Application {
         this.board[i][j] = new Tile(this.values.splice(0, 1))
       }
     }
-
     this.renderWindow(this.body)
   }
 
@@ -218,9 +217,9 @@ export default class Memory extends Application {
 
     for (let i = 0; i < this.board.length; i++) {
       for (let j = 0; j < this.board[i].length; j++) {
-        const x = this.board[i][j].getValue()
+        const x = this.board[i][j].getValue(this.gameStyle)
         if (this.board[i][j].complete) {
-          document.getElementById(`${i}${j}`).parentElement.style.backgroundImage = `url(../img/memory/${this.gameStyle + x}.png)`
+          document.getElementById(`${i}${j}`).parentElement.style.backgroundImage = `url(${x})`
         }
       }
     }

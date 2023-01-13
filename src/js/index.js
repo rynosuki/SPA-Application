@@ -1,6 +1,9 @@
 import Battleship from './battleship.js'
 import Chat from './chat.js'
 import Memory from './memory.js'
+import battleshipapp from '../img/apps/battleshipapp.png'
+import chatapp from '../img/apps/chatapp.png'
+import memoryapp from '../img/apps/memoryapp.png'
 
 const header = document.querySelector('.header')
 header.style.zIndex = '1000'
@@ -8,6 +11,9 @@ const body = document.querySelector('.body')
 const footer = document.querySelector('.footer')
 footer.style.zIndex = '1000'
 const activeApps = []
+const apps = {
+  memoryapp, chatapp, battleshipapp
+}
 
 initMain()
 
@@ -94,8 +100,8 @@ function renderUsername () {
  * Renders the app buttons
  */
 function renderApps () {
-  const apps = ['memoryapp', 'chatapp', 'battleshipapp']
-  for (const appName of apps) {
+  for (const [key, value] of Object.entries(apps)) {
+    console.log(key, value)
     const tempDiv = document.createElement('div')
     const tempElement = document.createElement('button')
     tempElement.style.display = 'none'
@@ -103,14 +109,14 @@ function renderApps () {
 
     const appToolTip = document.createElement('p')
     appToolTip.id = 'appTooltip'
-    appToolTip.innerHTML = 'Start ' + appName
+    appToolTip.innerHTML = 'Start ' + key
     appToolTip.style.display = 'none'
     tempDiv.append(appToolTip)
 
-    tempDiv.name = appName
+    tempDiv.name = key
     tempDiv.style.width = '50px'
     tempDiv.style.height = '50px'
-    tempDiv.style.backgroundImage = `url(../img/apps/${appName}.png)`
+    tempDiv.style.backgroundImage = `url(${value})`
     footer.append(tempDiv)
 
     tempDiv.addEventListener('mouseover', () => {
@@ -180,26 +186,26 @@ function displayTime () {
 /**
  * Starts an application and puts icon in footer
  *
- * @param {*} app Application to launch
+ * @param {*} game Application to launch
  * @param {*} appName Name of the application
  */
-function startApplication (app, appName) {
+function startApplication (game, appName) {
   const tempDiv = document.createElement('div')
   tempDiv.className = 'applicationIcon'
-  tempDiv.style.backgroundImage = `url(../img/apps/${appName}.png)`
+  tempDiv.style.backgroundImage = `url(${appName})`
   tempDiv.style.width = '50px'
   tempDiv.style.height = '50px'
-  app.setDomElement(tempDiv)
+  game.setDomElement(tempDiv)
   footer.append(tempDiv)
-  activeApps.push(app)
-  app.renderWindow(body)
+  activeApps.push(game)
+  game.renderWindow(body)
 }
 
 // Add eventlistener that starts an application.
 footer.addEventListener('pointerdown', function (e) {
-  console.log(e.target.name)
   if (e.target.name !== undefined) {
     let game
+    console.log(e.target.name)
     switch (e.target.name) {
       case 'memoryapp':
         game = new Memory()
@@ -211,9 +217,8 @@ footer.addEventListener('pointerdown', function (e) {
         game = new Battleship()
         break
     }
-    startApplication(game, e.target.name)
+    startApplication(game, apps[e.target.name])
   } else if (e.target.className === 'applicationIcon') {
-    console.log(e.target)
     for (const app of activeApps) {
       if (app.getDomElement() === e.target) {
         console.log(app)

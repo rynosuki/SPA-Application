@@ -51,7 +51,6 @@ export default class Application {
 
     // Add event listeners to drag the app.
     this.header.addEventListener('mousedown', (e) => {
-      e.target.focus()
       this.initialX = e.clientX - this.xOffset
       this.initialY = e.clientY - this.yOffset
 
@@ -77,6 +76,18 @@ export default class Application {
 
         this.body.style.transform = `translate3d(${this.currentX}px, ${this.currentY}px, 0)`
       }
+    })
+
+    this.body.addEventListener('focusin', (e) => {
+      this.header.style.backgroundColor = 'rgb(160, 160, 160)'
+      this.body.style.zIndex = 1000
+      this.domElement.style.border = '2px solid #000'
+    })
+
+    this.body.addEventListener('focusout', (e) => {
+      this.header.style.backgroundColor = 'grey'
+      this.body.style.zIndex = 0
+      this.domElement.style.border = 'none'
     })
   }
 
