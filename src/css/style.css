@@ -177,13 +177,17 @@ select {
   display: none;
 }
 
-:focus {
+.applicationIcon {
+  box-sizing: border-box;
+}
+
+/* :focus {
   z-index: 999;
 }
 
 :focus .appHeader {
   background-color: rgb(160, 160, 160);
-}
+} */
 
 /* Application Chat CSS */
 .messagesDiv {
