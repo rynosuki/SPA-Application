@@ -94,6 +94,6 @@ export default class Application {
 
   minimizeApp () {
     this.minimized = !this.minimized
-    this.header.parentNode.parentNode.className = this.minimized ? 'appMinimized' : 'app'
+    this.header.parentNode.className = this.minimized ? 'appMinimized' : 'app'
   }
 }

@@ -3,7 +3,9 @@ export default {
   build: {
     outDir: '../dist',
     emptyOutDir: true,
-    target: 'esnext'
+    target: 'esnext',
+    assetsPublicPath: '/',
+    assetsSubDirectory: 'img'
   },
   server: {
     host: true,

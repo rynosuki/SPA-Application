@@ -213,8 +213,10 @@ footer.addEventListener('pointerdown', function (e) {
     }
     startApplication(game, e.target.name)
   } else if (e.target.className === 'applicationIcon') {
+    console.log(e.target)
     for (const app of activeApps) {
       if (app.getDomElement() === e.target) {
+        console.log(app)
         app.header.focus()
         app.minimizeApp()
       }
