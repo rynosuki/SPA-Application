@@ -113,7 +113,7 @@ export default class Application {
     } else {
       this.header.style.backgroundColor = 'grey'
       this.body.style.zIndex = 0
-      this.domElement.style.border = 'none'
+      this.domElement.style.border = '0'
     }
     this.header.parentNode.className = this.minimized ? 'appMinimized' : 'app'
   }

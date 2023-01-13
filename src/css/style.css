@@ -181,6 +181,10 @@ select {
   box-sizing: border-box;
 }
 
+.applicationIcon:hover {
+  cursor: pointer;
+}
+
 /* Application Chat CSS */
 .messagesDiv {
   position: relative;
