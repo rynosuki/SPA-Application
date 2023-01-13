@@ -77,26 +77,44 @@ export default class Memory extends Application {
     this.main.append(dropDownDiv)
 
     // Create the drop down menu for the board size.
-    dropDownDiv.innerHTML += `
-    <select id = "myList">  
-    <option> ---Size--- </option>  
-    <option> 4x4 </option>
-    <option> 2x4 </option>
-    <option> 2x2 </option>
-    </select>
-    `
+    const myList = document.createElement('select')
+    myList.id = 'myList'
+    dropDownDiv.append(myList)
 
-    // Create the drop down menu for the board style.
-    dropDownDiv.innerHTML += `
-    <select id = "gameStyle">  
-    <option> ---Style--- </option>  
-    <option> Robin </option>  
-    <option> Characters </option>  
-    </select>
-    `
+    const option1 = document.createElement('option')
+    option1.innerHTML = '---Size---'
+    myList.append(option1)
 
-    document.getElementById('myList').addEventListener('change', e => this.changeBoardSize(e))
-    document.getElementById('gameStyle').addEventListener('change', e => this.changeBoardStyle(e))
+    const option2 = document.createElement('option')
+    option2.innerHTML = '4x4'
+    myList.append(option2)
+
+    const option3 = document.createElement('option')
+    option3.innerHTML = '2x4'
+    myList.append(option3)
+
+    const option4 = document.createElement('option')
+    option4.innerHTML = '2x2'
+    myList.append(option4)
+
+    const gameStyleList = document.createElement('select')
+    gameStyleList.id = 'gameStyle'
+    dropDownDiv.append(gameStyleList)
+
+    const option5 = document.createElement('option')
+    option5.innerHTML = '---Style---'
+    gameStyleList.append(option5)
+
+    const option6 = document.createElement('option')
+    option6.innerHTML = 'Robin'
+    gameStyleList.append(option6)
+
+    const option7 = document.createElement('option')
+    option7.innerHTML = 'Characters'
+    gameStyleList.append(option7)
+
+    myList.addEventListener('change', e => this.changeBoardSize(e))
+    gameStyleList.addEventListener('change', e => this.changeBoardStyle(e))
   }
 
   /**
@@ -139,7 +157,7 @@ export default class Memory extends Application {
     }
 
     // Check if the card is the same as the last card turned.
-    if (valueCard === this.lastObjectUp.getValue()) {
+    if (valueCard === this.lastObjectUp.getValue(this.gameStyle)) {
       this.lastObjectUp.setComplete()
       this.currentObjectUp.setComplete()
       this.completed += 2
