@@ -106,7 +106,7 @@ export default class Memory extends Application {
    */
   async turnCard (target) {
     // Check if the target is a card and if it is the same card as last time.
-    if (target.id === 'myList' || target.id === 'gameStyle' || target === this.lastEventTarget) {
+    if (target.className !== 'memoryButtons' || target === this.lastEventTarget) {
       return
     }
 
@@ -220,7 +220,7 @@ export default class Memory extends Application {
       for (let j = 0; j < this.board[i].length; j++) {
         const x = this.board[i][j].getValue()
         if (this.board[i][j].complete) {
-          document.getElementById(`${i}${j}`).parentElement.style.backgroundImage = `url(../img/memory/${this.boardStyle + x}.png)`
+          document.getElementById(`${i}${j}`).parentElement.style.backgroundImage = `url(../img/memory/${this.gameStyle + x}.png)`
         }
       }
     }

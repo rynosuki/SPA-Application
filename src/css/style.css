@@ -93,6 +93,13 @@ select {
   background-color: rgba(71, 92, 129, 0.435);
 }
 
+.footerLine {
+  position: relative;
+  background-color: black;
+  height: 80%;
+  width: 2px;
+}
+
 /* Application CSS */
 .app {
   display: flex;
@@ -140,12 +147,33 @@ select {
   border: 2px solid black;
 }
 
-.appCloseButton:hover {
+.appCloseButton:hover,
+.appMinimizeButton:hover {
   color: black;
   background-color: red;
 }
 
 .appCloseButton > button {
+  display: none;
+}
+
+.appMinimizeButton {
+  color: rgb(164, 164, 164);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  width: 30px;
+  height: 30px;
+  background: black;
+  position: absolute;
+  right: 40px;
+  border-radius: 20%;
+  border: 2px solid black;
+}
+
+.appMinimized {
   display: none;
 }
 

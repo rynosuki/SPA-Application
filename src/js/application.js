@@ -10,6 +10,8 @@ export default class Application {
     this.initialY = undefined
 
     this.appName = ''
+    this.domElement = undefined
+    this.minimized = false
 
     // Create the app window.
     this.body = document.createElement('div')
@@ -27,6 +29,11 @@ export default class Application {
     this.closeContainer.append(document.createTextNode('X'))
     this.closeContainer.append(this.closeButton)
 
+    this.minimizeContainer = document.createElement('div')
+    this.minimizeContainer.className = 'appMinimizeButton'
+    this.minimizeContainer.append(document.createTextNode('_'))
+
+    this.header.append(this.minimizeContainer)
     this.header.append(this.closeContainer)
 
     this.body.appendChild(this.header)
@@ -36,6 +43,9 @@ export default class Application {
     this.header.addEventListener('click', e => {
       if (e.target.className === 'appCloseButton') {
         e.target.parentNode.parentNode.remove()
+        this.closeApp()
+      } else if (e.target.className === 'appMinimizeButton') {
+        this.minimizeApp(e)
       }
     })
 
@@ -68,5 +78,22 @@ export default class Application {
         this.body.style.transform = `translate3d(${this.currentX}px, ${this.currentY}px, 0)`
       }
     })
+  }
+
+  setDomElement (domElement) {
+    this.domElement = domElement
+  }
+
+  getDomElement () {
+    return this.domElement
+  }
+
+  closeApp () {
+    this.domElement.remove()
+  }
+
+  minimizeApp () {
+    this.minimized = !this.minimized
+    this.header.parentNode.parentNode.className = this.minimized ? 'appMinimized' : 'app'
   }
 }

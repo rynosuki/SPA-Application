@@ -129,6 +129,10 @@ function renderApps () {
       appToolTip.style.display = 'none'
     })
   }
+
+  const lineDiv = document.createElement('div')
+  lineDiv.className = 'footerLine'
+  footer.append(lineDiv)
 }
 
 /**
@@ -173,8 +177,27 @@ function displayTime () {
   document.getElementById('clock').innerHTML = currentTimeString
 }
 
+/**
+ * Starts an application and puts icon in footer
+ *
+ * @param {*} app Application to launch
+ * @param {*} appName Name of the application
+ */
+function startApplication (app, appName) {
+  const tempDiv = document.createElement('div')
+  tempDiv.className = 'applicationIcon'
+  tempDiv.style.backgroundImage = `url(../img/apps/${appName}.png)`
+  tempDiv.style.width = '50px'
+  tempDiv.style.height = '50px'
+  app.setDomElement(tempDiv)
+  footer.append(tempDiv)
+  activeApps.push(app)
+  app.renderWindow(body)
+}
+
 // Add eventlistener that starts an application.
 footer.addEventListener('pointerdown', function (e) {
+  console.log(e.target.name)
   if (e.target.name !== undefined) {
     let game
     switch (e.target.name) {
@@ -188,7 +211,13 @@ footer.addEventListener('pointerdown', function (e) {
         game = new Battleship()
         break
     }
-    activeApps.push(game)
-    game.renderWindow(body)
+    startApplication(game, e.target.name)
+  } else if (e.target.className === 'applicationIcon') {
+    for (const app of activeApps) {
+      if (app.getDomElement() === e.target) {
+        app.header.focus()
+        app.minimizeApp()
+      }
+    }
   }
 })
