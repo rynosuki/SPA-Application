@@ -47,6 +47,13 @@ export default class BattleshipCell {
     }
   }
 
+  setupShip (ship, shipPart, rotation) {
+    this.isShip = true
+    this.ship = ship
+    this.shipPart = shipPart
+    this.rotation = rotation
+  }
+
   getImageSrc () {
     return this.imgSrc[this.ship][this.shipPart]
   }

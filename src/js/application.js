@@ -16,7 +16,7 @@ export default class Application {
     // Create the app window.
     this.body = document.createElement('div')
     this.body.className = 'app'
-    this.body.tabIndex = 0
+    this.body.tabIndex = -1
     this.header = document.createElement('div')
     this.header.className = 'appHeader'
     this.main = document.createElement('div')

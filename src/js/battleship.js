@@ -13,6 +13,7 @@ export default class Battleship extends Application {
     this.userName = undefined
     this.myTurn = false
     this.gameStarted = false
+    this.hitsOnMe = 0
     if (sessionStorage.getItem('username') !== null) {
       this.userName = sessionStorage.getItem('username')
     }
@@ -38,8 +39,8 @@ export default class Battleship extends Application {
     this.gameBody.append(this.opponentBoardContainer)
     this.turnText = document.createElement('p')
 
-    this.board = []
-    this.opponentBoard = []
+    this.board = undefined
+    this.opponentBoard = undefined
     this.boardSize = 6
     this.ships = ['carrier', 'battleship', 'cargo']
 
@@ -110,9 +111,12 @@ export default class Battleship extends Application {
   gameLoopSend (e) {
     // Grab the X/Y coordinates that was clicked and send it to the server.
     // If game hasnt been started it initiates a connection to the other player if present.
-    if (this.myTurn) {
+    if (this.myTurn && this.gameStarted) {
       const tileX = parseInt(e.target.id[1])
       const tileY = parseInt(e.target.id[2])
+      if (this.opponentBoard[tileX][tileY].isHit) {
+        return
+      }
       this.wsSend(`${tileX}${tileY}`)
       this.myTurn = false
       this.turnText.innerHTML = 'Waiting for opponent...'
@@ -134,6 +138,7 @@ export default class Battleship extends Application {
     const tileY = parseInt(e.y)
     if (this.board[tileX][tileY].isShip) {
       this.board[tileX][tileY].isHit = true
+      this.hitsOnMe++
       const hit = document.createElement('div')
       hit.style.backgroundImage = `url(${this.board[tileX][tileY].imgSrc.checked})`
       hit.style.width = '26px'
@@ -147,12 +152,20 @@ export default class Battleship extends Application {
       document.getElementById(`p${tileX}${tileY}`).style.backgroundImage = `url(${this.board[tileX][tileY].imgSrc.checked})`
       this.wsSend({ x: tileX, y: tileY, hit: false })
     }
+    if (this.hitsOnMe === 9) {
+      this.turnText.innerHTML = 'You lost!'
+      this.myTurn = false
+      this.gameStarted = false
+      this.wsSend({ question: 'winner', answer: true })
+    }
   }
 
   /**
    * Initializes the boards.
    */
   initBoards () {
+    this.board = []
+    this.opponentBoard = []
     for (let i = 0; i < this.boardSize; i++) {
       this.board[i] = []
       for (let j = 0; j < this.boardSize; j++) {
@@ -167,6 +180,17 @@ export default class Battleship extends Application {
       }
     }
 
+    if (this.assignShips() === false) {
+      this.initBoards()
+    }
+  }
+
+  /**
+   * Assigns the ships to the board.
+   *
+   * @returns {boolean} If the ships was assigned or not.
+   */
+  assignShips () {
     for (let i = 0; i < this.ships.length; i++) {
       const tileX = Math.floor(Math.random() * 6)
       const tileY = Math.floor(Math.random() * 6)
@@ -183,66 +207,47 @@ export default class Battleship extends Application {
         rotation = 1
       }
 
-      this.assignShips(i, tileX, tileY, rotation)
+      // Assigns the ships to the board, together with part and rotation.
+      switch (rotation) {
+        case 1:
+          if (this.board[tileX][tileY + 1].isShip || this.board[tileX][tileY + 2].isShip) {
+            this.assignShips(i, tileX, tileY, rotation + 1)
+            return false
+          }
+          this.board[tileX][tileY + 1].setupShip(this.ships[i], 'middle', rotation)
+          this.board[tileX][tileY + 2].setupShip(this.ships[i], 'front', rotation)
+          break
+        case 2:
+          if (this.board[tileX + 1][tileY].isShip || this.board[tileX + 2][tileY].isShip) {
+            this.assignShips(i, tileX, tileY, rotation + 1)
+            return false
+          }
+          this.board[tileX + 1][tileY].setupShip(this.ships[i], 'middle', rotation)
+          this.board[tileX + 2][tileY].setupShip(this.ships[i], 'front', rotation)
+          break
+        case 3:
+          if (this.board[tileX][tileY - 1].isShip || this.board[tileX][tileY - 2].isShip) {
+            this.assignShips(i, tileX, tileY, rotation + 1)
+            return false
+          }
+          this.board[tileX][tileY - 1].setupShip(this.ships[i], 'middle', rotation)
+          this.board[tileX][tileY - 2].setupShip(this.ships[i], 'front', rotation)
+          break
+        case 4:
+          if (this.board[tileX - 1][tileY].isShip || this.board[tileX - 2][tileY].isShip) {
+            this.assignShips(i, tileX, tileY, 1)
+            return false
+          }
+          this.board[tileX - 1][tileY].setupShip(this.ships[i], 'middle', rotation)
+          this.board[tileX - 2][tileY].setupShip(this.ships[i], 'front', rotation)
+          break
+      }
+      if (this.board[tileX][tileY].isShip) {
+        return false
+      }
+      this.board[tileX][tileY].setupShip(this.ships[i], 'back', rotation)
     }
-  }
-
-  /**
-   * Assigns the ships to the board.
-   *
-   * @param {*} i Which ship to assign.
-   * @param {*} tileX What X coordinate to assign.
-   * @param {*} tileY What Y coordinate to assign.
-   * @param {*} rotation What rotation to assign.
-   */
-  assignShips (i, tileX, tileY, rotation) {
-    // Assigns the ships to the board, together with part and rotation.
-    this.board[tileX][tileY].isShip = true
-    this.board[tileX][tileY].ship = this.ships[i]
-    this.board[tileX][tileY].shipPart = 'back'
-    this.board[tileX][tileY].rotation = rotation
-    switch (rotation) {
-      case 1:
-        this.board[tileX][tileY + 1].isShip = true
-        this.board[tileX][tileY + 1].shipPart = 'middle'
-        this.board[tileX][tileY + 1].ship = this.ships[i]
-        this.board[tileX][tileY + 1].rotation = rotation
-        this.board[tileX][tileY + 2].isShip = true
-        this.board[tileX][tileY + 2].ship = this.ships[i]
-        this.board[tileX][tileY + 2].shipPart = 'front'
-        this.board[tileX][tileY + 2].rotation = rotation
-        break
-      case 2:
-        this.board[tileX + 1][tileY].isShip = true
-        this.board[tileX + 1][tileY].ship = this.ships[i]
-        this.board[tileX + 1][tileY].shipPart = 'middle'
-        this.board[tileX + 1][tileY].rotation = rotation
-        this.board[tileX + 2][tileY].isShip = true
-        this.board[tileX + 2][tileY].ship = this.ships[i]
-        this.board[tileX + 2][tileY].shipPart = 'front'
-        this.board[tileX + 2][tileY].rotation = rotation
-        break
-      case 3:
-        this.board[tileX][tileY - 1].isShip = true
-        this.board[tileX][tileY - 1].ship = this.ships[i]
-        this.board[tileX][tileY - 1].shipPart = 'middle'
-        this.board[tileX][tileY - 1].rotation = rotation
-        this.board[tileX][tileY - 2].isShip = true
-        this.board[tileX][tileY - 2].ship = this.ships[i]
-        this.board[tileX][tileY - 2].shipPart = 'front'
-        this.board[tileX][tileY - 2].rotation = rotation
-        break
-      case 4:
-        this.board[tileX - 1][tileY].isShip = true
-        this.board[tileX - 1][tileY].ship = this.ships[i]
-        this.board[tileX - 1][tileY].shipPart = 'middle'
-        this.board[tileX - 1][tileY].rotation = rotation
-        this.board[tileX - 2][tileY].isShip = true
-        this.board[tileX - 2][tileY].ship = this.ships[i]
-        this.board[tileX - 2][tileY].shipPart = 'front'
-        this.board[tileX - 2][tileY].rotation = rotation
-        break
-    }
+    return true
   }
 
   /**
@@ -258,6 +263,8 @@ export default class Battleship extends Application {
     // If game is not started, start it. Else, continue with game.
     if (data.data.question === 'myturn?' && this.gameStarted === false) {
       this.wsStartLogic(data)
+    } else if (data.data.question === 'winner' && this.gameStarted === true) {
+      this.wsWinnerLogic(data)
     } else if (data.data.hit !== undefined) {
       this.wsHitLogic(data)
     } else {
@@ -275,7 +282,6 @@ export default class Battleship extends Application {
    * @param {*} data Data being recieved from websocket
    */
   wsStartLogic (data) {
-    console.log('wsTurn recieved:', data)
     if (data.data.answer === null) {
       if (this.myTurn === false) {
         this.wsSend({ question: 'myturn?', answer: true })
@@ -292,12 +298,25 @@ export default class Battleship extends Application {
   }
 
   /**
+   * WebSocket winner function for when a winner is recieved.
+   *
+   * @param {*} data Data being recieved from websocket
+   */
+  wsWinnerLogic (data) {
+    console.log(data)
+    if (data.data.answer === true) {
+      this.turnText.innerHTML = 'You won!'
+      this.myTurn = false
+      this.gameStarted = false
+    }
+  }
+
+  /**
    * WebSocket hit function for when a hit is recieved.
    *
    * @param {*} data Data being recieved from websocket
    */
   wsHitLogic (data) {
-    console.log('wsHit recieved:', data)
     const tileX = parseInt(data.data.x)
     const tileY = parseInt(data.data.y)
     if (data.data.hit) {

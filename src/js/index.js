@@ -101,7 +101,6 @@ function renderUsername () {
  */
 function renderApps () {
   for (const [key, value] of Object.entries(apps)) {
-    console.log(key, value)
     const tempDiv = document.createElement('div')
     const tempElement = document.createElement('button')
     tempElement.style.display = 'none'
@@ -205,7 +204,6 @@ function startApplication (game, appName) {
 footer.addEventListener('pointerdown', function (e) {
   if (e.target.name !== undefined) {
     let game
-    console.log(e.target.name)
     switch (e.target.name) {
       case 'memoryapp':
         game = new Memory()
@@ -221,7 +219,6 @@ footer.addEventListener('pointerdown', function (e) {
   } else if (e.target.className === 'applicationIcon') {
     for (const app of activeApps) {
       if (app.getDomElement() === e.target) {
-        console.log(app)
         app.header.focus()
         app.minimizeApp()
       }
