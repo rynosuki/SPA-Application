@@ -154,6 +154,11 @@ export default class Chat extends Application {
     // Check if message is in channel Robin if so decypher
     if (data.channel === 'Robin') {
       message.innerHTML = data.username + ': ' + this.cypher(data.data, 'decypher')
+    } else if (data.channel === 'Battleship') {
+      console.log(data)
+      if (data.data.startsWith('play ')) {
+        message.innerHTML = data.username + ': ' + data.data.split('play ')[1]
+      }
     } else {
       message.innerHTML = data.username + ': ' + data.data
     }

@@ -219,8 +219,11 @@ footer.addEventListener('pointerdown', function (e) {
   } else if (e.target.className === 'applicationIcon') {
     for (const app of activeApps) {
       if (app.getDomElement() === e.target) {
-        app.header.focus()
-        app.minimizeApp()
+        if (e.button === 0) {
+          app.minimizeApp()
+        } else if (e.button === 2) {
+          app.closeApp()
+        }
       }
     }
   }

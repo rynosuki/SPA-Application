@@ -16,7 +16,7 @@ export default class Application {
     // Create the app window.
     this.body = document.createElement('div')
     this.body.className = 'app'
-    this.body.tabIndex = -1
+    this.body.tabIndex = 0
     this.header = document.createElement('div')
     this.header.className = 'appHeader'
     this.main = document.createElement('div')
@@ -78,7 +78,7 @@ export default class Application {
       }
     })
 
-    this.body.addEventListener('focusin', (e) => {
+    this.body.addEventListener('focus', (e) => {
       this.header.style.backgroundColor = 'rgb(160, 160, 160)'
       this.body.style.zIndex = 1000
       this.domElement.style.border = '2px solid #000'
@@ -100,11 +100,21 @@ export default class Application {
   }
 
   closeApp () {
+    this.body.remove()
     this.domElement.remove()
   }
 
   minimizeApp () {
     this.minimized = !this.minimized
+    if (this.minimized === false) {
+      this.header.style.backgroundColor = 'rgb(160, 160, 160)'
+      this.body.style.zIndex = 1000
+      this.domElement.style.border = '2px solid #000'
+    } else {
+      this.header.style.backgroundColor = 'grey'
+      this.body.style.zIndex = 0
+      this.domElement.style.border = 'none'
+    }
     this.header.parentNode.className = this.minimized ? 'appMinimized' : 'app'
   }
 }

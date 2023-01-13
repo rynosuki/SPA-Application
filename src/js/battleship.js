@@ -14,6 +14,7 @@ export default class Battleship extends Application {
     this.myTurn = false
     this.gameStarted = false
     this.hitsOnMe = 0
+    this.chatPlayer = false
     if (sessionStorage.getItem('username') !== null) {
       this.userName = sessionStorage.getItem('username')
     }
